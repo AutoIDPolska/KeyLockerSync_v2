@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace KeyLockerSync.Services
 {
@@ -27,6 +28,75 @@ namespace KeyLockerSync.Services
             _httpClient.BaseAddress = new Uri(apiUrl);
         }
 
+        public async Task<List<Device>> GetDevicesAsync(int? gid = null, string name = null, string status = null)
+        {
+            Console.WriteLine("[INFO] Wykonuję GET /devices"); // Logowanie
+            try
+            {
+                var builder = new UriBuilder(_httpClient.BaseAddress + "devices");
+                var query = HttpUtility.ParseQueryString(builder.Query);
+                if (gid.HasValue)
+                {
+                    query["gid"] = gid.Value.ToString();
+                }
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query["name"] = name;
+                }
+                if (!string.IsNullOrEmpty(status))
+                {
+                    query["status"] = status;
+                }
+                builder.Query = query.ToString();
+
+                var response = await _httpClient.GetAsync(builder.ToString());
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Device>>(content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd GET /devices: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<Key>> GetKeysAsync()
+        {
+            Console.WriteLine("[INFO] Wykonuję GET /keys");
+            try
+            {
+                var response = await _httpClient.GetAsync("/keys");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Key>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd GET /keys: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<KeyState>> GetKeyStatesAsync()
+        {
+            Console.WriteLine("[INFO] Wykonuję GET /keys/states");
+            try
+            {
+                var response = await _httpClient.GetAsync("/keys/states");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<KeyState>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd GET /keys/states: {ex.Message}");
+                return null;
+            }
+        }
+
+
+
         // Wysyłka obiektu Device (POST/PUT/DELETE)
         public async Task<bool> SendDeviceAsync(object obj, HttpMethod method)
         {
@@ -37,7 +107,7 @@ namespace KeyLockerSync.Services
 
             HttpRequestMessage request;
 
-            // 🔹 Jeśli PUT, najpierw GET aby pobrać pełny JSON i zmienić tylko Name
+            // Jeśli PUT, najpierw GET aby pobrać pełny JSON i zmienić tylko Name
             if (method == HttpMethod.Put)
             {
                 try
@@ -51,15 +121,15 @@ namespace KeyLockerSync.Services
                             using var doc = JsonDocument.Parse(json);
                             if (doc.RootElement.ValueKind == JsonValueKind.Object)
                             {
-                                // 🔹 Tworzymy słownik z JSON
+                                // Tworzymy słownik z JSON
                                 var objDict = new Dictionary<string, JsonElement>();
                                 foreach (var prop in doc.RootElement.EnumerateObject())
                                     objDict[prop.Name] = prop.Value.Clone();
 
-                                // 🔹 Nadpisujemy tylko name
+                                // Nadpisujemy tylko name
                                 objDict["name"] = JsonDocument.Parse($"\"{device.Name}\"").RootElement.Clone();
 
-                                // 🔹 Serializacja do JSON i PUT
+                                // Serializacja do JSON i PUT
                                 var updatedJson = JsonSerializer.Serialize(objDict);
                                 request = new HttpRequestMessage(method, url)
                                 {
@@ -108,7 +178,7 @@ namespace KeyLockerSync.Services
             }
             else
             {
-                // 🔹 POST/DELETE używa pełnego obiektu
+                // POST/DELETE używa pełnego obiektu
                 request = new HttpRequestMessage(method, url)
                 {
                     Content = JsonContent.Create(device)
@@ -134,6 +204,120 @@ namespace KeyLockerSync.Services
                 return false;
             }
         }
+
+        public async Task<bool> SendKeyGroupAsync(object obj, HttpMethod method)
+        {
+            if (obj is not KeyGroup keyGroup)
+                return false;
+
+            // *** POPRAWIONY ADRES URL ENDPOINTU ***
+            // Zmieniono "/key-groups" na "/groups"
+            string url = method == HttpMethod.Delete ? $"/groups/{keyGroup.GroupIdApi}" : "/groups";
+
+            var request = new HttpRequestMessage(method, url);
+
+            if (method == HttpMethod.Post || method == HttpMethod.Put)
+            {
+                // Tworzymy obiekt anonimowy, aby wysłać tylko te pola, których oczekuje API
+                var payload = new
+                {
+                    gid = keyGroup.Gid,
+                    name = keyGroup.Name,
+                    description = keyGroup.Description,
+                    groupIdApi = keyGroup.GroupIdApi
+                };
+                request.Content = JsonContent.Create(payload);
+            }
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                Console.WriteLine($"HTTP {method} {url} -> {response.StatusCode}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Response body: {content}");
+                }
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd wysyłki {method} dla keygroup {keyGroup.GroupIdApi}: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> SendPersonAsync(object obj, HttpMethod method)
+        {
+            if (obj is not Person person)
+                return false;
+
+            string url = (method == HttpMethod.Delete || method == HttpMethod.Put)
+                ? $"/persons/{person.OwnerIdApi}"
+                : "/persons";
+
+            var request = new HttpRequestMessage(method, url);
+
+            if (method == HttpMethod.Post || method == HttpMethod.Put)
+            {
+                request.Content = JsonContent.Create(person);
+            }
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                Console.WriteLine($"HTTP {method} {url} -> {response.StatusCode}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Response body: {content}");
+                }
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd wysyłki {method} dla osoby {person.OwnerIdApi}: {ex.Message}");
+                return false;
+            }
+        }
+
+
+        public async Task<bool> UpdateKeyNameAsync(object obj, HttpMethod method)
+        {
+            // Ta metoda obsługuje tylko operacje PUT dla obiektu Key
+            if (method != HttpMethod.Put || obj is not Key key)
+                return false;
+
+            string url = $"/keys/{key.KeyId}/name";
+
+            // Tworzymy payload z samą nazwą, zgodnie z wymaganiami API
+            var payload = new { name = key.Name };
+            var request = new HttpRequestMessage(HttpMethod.Put, url)
+            {
+                Content = JsonContent.Create(payload)
+            };
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                Console.WriteLine($"HTTP PUT {url} -> {response.StatusCode}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Response body: {content}");
+                }
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd wysyłki PUT dla klucza {key.KeyId}: {ex.Message}");
+                return false;
+            }
+        }
+
 
         // 🔹 Wygodna metoda do zmiany tylko Name
         public async Task<bool> UpdateDeviceNameAsync(string gid, string newName)

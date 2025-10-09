@@ -3,8 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\models\\key.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:models\\key.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\models\\keystate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:models\\keystate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\services\\syncservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:services\\syncservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\data\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:data\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\models\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:models\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\models\\keygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:models\\keygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|c:\\users\\pzybura\\documents\\github\\keylockersync_pz_v2\\keylockersync_v2\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{8A1C8A3A-9B58-4C63-A9AA-123456789ABC}|KeyLockerSync.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,17 +46,121 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Person.cs",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\Person.cs",
+              "RelativeDocumentMoniker": "Models\\Person.cs",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\Person.cs",
+              "RelativeToolTip": "Models\\Person.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T13:21:05.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "KeyGroup.cs",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\KeyGroup.cs",
+              "RelativeDocumentMoniker": "Models\\KeyGroup.cs",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\KeyGroup.cs",
+              "RelativeToolTip": "Models\\KeyGroup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T12:33:16.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SyncService.cs",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Services\\SyncService.cs",
+              "RelativeDocumentMoniker": "Services\\SyncService.cs",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Services\\SyncService.cs",
+              "RelativeToolTip": "Services\\SyncService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T08:56:35.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "KeyState.cs",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\KeyState.cs",
+              "RelativeDocumentMoniker": "Models\\KeyState.cs",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\KeyState.cs",
+              "RelativeToolTip": "Models\\KeyState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T08:36:04.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Key.cs",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\Key.cs",
+              "RelativeDocumentMoniker": "Models\\Key.cs",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Models\\Key.cs",
+              "RelativeToolTip": "Models\\Key.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T08:35:33.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "app.config",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\app.config",
+              "RelativeDocumentMoniker": "app.config",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\app.config",
+              "RelativeToolTip": "app.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-10-09T08:08:44.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DatabaseHelper.cs",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Data\\DatabaseHelper.cs",
+              "RelativeDocumentMoniker": "Data\\DatabaseHelper.cs",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Data\\DatabaseHelper.cs",
+              "RelativeToolTip": "Data\\DatabaseHelper.cs",
+              "ViewState": "AgIAAO0AAAAAAAAAAAAkwCwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T07:55:16.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ApiService.cs",
+              "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Services\\ApiService.cs",
+              "RelativeDocumentMoniker": "Services\\ApiService.cs",
+              "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Services\\ApiService.cs",
+              "RelativeToolTip": "Services\\ApiService.cs",
+              "ViewState": "AgIAAO0AAAAAAAAAAAAmwD4BAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T07:48:40.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAkwIYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-09T07:39:58.97Z",
               "EditorCaption": ""
