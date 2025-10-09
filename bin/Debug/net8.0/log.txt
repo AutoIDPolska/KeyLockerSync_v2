@@ -1,0 +1,12 @@
+2025-10-02 16:28:14 | Start synchronizacji (co 1 min). CTRL+C aby zakończyć.
+2025-10-02 16:29:55 | Start synchronizacji (co 1 min). CTRL+C aby zakończyć.
+2025-10-02 17:18:49 | Start synchronizacji (co 1 min). CTRL+C aby zakończyć.
+2025-10-02 17:24:23 | Start synchronizacji (co 35 sek.). CTRL+C aby zakończyć.
+2025-10-02 17:47:05 | Start synchronizacji (co 35 sek.). CTRL+C aby zakończyć.
+2025-10-02 18:07:51 | Start synchronizacji (co 35 sek.). CTRL+C aby zakończyć.
+2025-10-03 14:22:47 | Start synchronizacji (co 35 sek.). CTRL+C aby zakończyć.
+2025-10-08 12:07:09 | Start synchronizacji (co 35 sek.). CTRL+C aby zakończyć.
+2025-10-08 12:07:10 | [ERR] Błąd POST /persons : Could not find stored procedure 'dbo.keyLocker_persons_post'.
+2025-10-08 12:07:10 | GET /devices - OK
+2025-10-08 12:07:10 | [ERR] Błąd GET /keys/states : Could not find stored procedure 'keyLocker_keys_state_get'.
+2025-10-08 12:07:10 | [ERR] Błąd GET /keys : Procedure or function keyLocker_key_get has too many arguments specified.
