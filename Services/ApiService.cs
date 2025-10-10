@@ -51,12 +51,17 @@ namespace KeyLockerSync.Services
 
                 var response = await _httpClient.GetAsync(builder.ToString());
                 response.EnsureSuccessStatusCode();
+                
+                                
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<Device>>(content);
+                //Console.WriteLine($"[DEBUG] Otrzymano odpowiedź z GET /devices (api): {content}");
+
+                return JsonSerializer.Deserialize<List<Device>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                                
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] Błąd GET /devices: {ex.Message}");
+                Console.WriteLine($"[ERROR] Błąd GET /devices (api): {ex.Message}");
                 return null;
             }
         }
@@ -210,15 +215,20 @@ namespace KeyLockerSync.Services
             if (obj is not KeyGroup keyGroup)
                 return false;
 
-            // *** POPRAWIONY ADRES URL ENDPOINTU ***
-            // Zmieniono "/key-groups" na "/groups"
-            string url = method == HttpMethod.Delete ? $"/groups/{keyGroup.GroupIdApi}" : "/groups";
+            string url = (method == HttpMethod.Delete || method == HttpMethod.Put)
+                ? $"/groups/{keyGroup.GroupIdApi}"
+                : "/groups";
 
             var request = new HttpRequestMessage(method, url);
 
             if (method == HttpMethod.Post || method == HttpMethod.Put)
             {
-                // Tworzymy obiekt anonimowy, aby wysłać tylko te pola, których oczekuje API
+                if (string.IsNullOrEmpty(keyGroup.Gid))
+                {
+                    Console.WriteLine($"[WARN] Pomijam operację {method} dla grupy '{keyGroup.Name}' (GroupIdApi={keyGroup.GroupIdApi}), ponieważ GID jest wymagany, a procedura zwróciła NULL.");
+                    return true;
+                }
+
                 var payload = new
                 {
                     gid = keyGroup.Gid,
@@ -227,6 +237,10 @@ namespace KeyLockerSync.Services
                     groupIdApi = keyGroup.GroupIdApi
                 };
                 request.Content = JsonContent.Create(payload);
+
+                // *** DODANE SZCZEGÓŁOWE LOGOWANIE WYSYŁANYCH DANYCH ***
+                var jsonPayloadForLogging = JsonSerializer.Serialize(payload);
+                Console.WriteLine($"[DEBUG] Wysyłam {method} do {url} z danymi: {jsonPayloadForLogging}");
             }
 
             try
@@ -237,7 +251,8 @@ namespace KeyLockerSync.Services
                 if (!response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Response body: {content}");
+                    // Logujemy ciało odpowiedzi błędu, co jest kluczowe
+                    Console.WriteLine($"[DEBUG] API zwróciło błąd. Treść odpowiedzi: {content}");
                 }
                 return response.IsSuccessStatusCode;
             }
@@ -318,6 +333,46 @@ namespace KeyLockerSync.Services
             }
         }
 
+        /// <summary>
+        /// Przypisuje (POST) lub odbiera (DELETE) klucze osobie.
+        /// </summary>
+        /// <summary>
+        /// Przypisuje (POST) lub odbiera (DELETE) klucze osobie.
+        /// </summary>
+        public async Task<bool> AssignOrUnassignKeyAsync(object obj, HttpMethod method)
+        {
+            if (obj is not KeyUser keyUser)
+                return false;
+
+            string url = $"/persons/{keyUser.OwnerIdApi}/keys";
+
+            // *** KLUCZOWA ZMIANA: Opakowujemy listę ID w obiekt anonimowy ***
+            // Tworzymy obiekt z polem "keyIds", zgodnie z prawdopodobnymi wymaganiami API.
+            var payload = new { keyIds = keyUser.KeyIds };
+
+            var request = new HttpRequestMessage(method, url)
+            {
+                Content = JsonContent.Create(payload)
+            };
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                Console.WriteLine($"HTTP {method} {url} -> {response.StatusCode}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Response body: {content}");
+                }
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd wysyłki {method} dla KeyUser {keyUser.OwnerIdApi}: {ex.Message}");
+                return false;
+            }
+        }
 
         // 🔹 Wygodna metoda do zmiany tylko Name
         public async Task<bool> UpdateDeviceNameAsync(string gid, string newName)

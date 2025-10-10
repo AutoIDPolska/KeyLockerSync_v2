@@ -5,7 +5,7 @@ namespace KeyLockerSync.Models
         public string Gid { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public int MasterDeviceId { get; set; }
+        public int? MasterDeviceId { get; set; }
         public DeviceConfig Config { get; set; }
         public string Status { get; set; }        
         public DateTime? LastSyncAt { get; set; } 

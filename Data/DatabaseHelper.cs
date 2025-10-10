@@ -18,8 +18,10 @@ namespace KeyLockerSync.Data
         public List<AuditRecord> GetPendingAuditRecords()
         {
             var list = new List<AuditRecord>();
+           
+            string query = "SELECT TOP 1000 ID, Object_ID, Additional_ID, Object_Type, Action_Type, Date_Added, Date_Processed, Status FROM keylocker_audit WHERE Status='0'";
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("SELECT TOP 1000 * FROM keylocker_audit WHERE Status='0'", conn);
+            using var cmd = new SqlCommand(query, conn);
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -28,6 +30,7 @@ namespace KeyLockerSync.Data
                 {
                     ID = Convert.ToInt32(reader["ID"]),
                     Object_ID = reader["Object_ID"].ToString(),
+                    Additional_ID = reader["Additional_ID"]?.ToString(), 
                     Object_Type = reader["Object_Type"].ToString(),
                     Action_Type = reader["Action_Type"].ToString(),
                     Date_Added = Convert.ToDateTime(reader["Date_Added"]),
@@ -66,6 +69,9 @@ namespace KeyLockerSync.Data
                     Console.WriteLine($"[WARN] Otrzymano urządzenie z pustym Gid. Pomijam rekord.");
                     continue;
                 }
+                Console.WriteLine($"[DEBUG] Przetwarzam urządzenie: GID='{device.Gid}', Name='{device.Name}', Status='{device.Status}'");
+
+
                 using var cmd = new SqlCommand("keyLocker_device_get", conn)
                 {
                     CommandType = CommandType.StoredProcedure
@@ -74,10 +80,11 @@ namespace KeyLockerSync.Data
                 cmd.Parameters.AddWithValue("@name", device.Name);
                 cmd.Parameters.AddWithValue("@status", device.Status);
                 cmd.Parameters.AddWithValue("@last_sync_at", (object)device.LastSyncAt ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@pass", DBNull.Value);
-                cmd.Parameters.AddWithValue("@ws_address", DBNull.Value);
-                cmd.Parameters.AddWithValue("@last_log_date", DBNull.Value);
+                cmd.Parameters.AddWithValue("@pass", "");
+                cmd.Parameters.AddWithValue("@ws_address", "");
+                cmd.Parameters.AddWithValue("@last_log_date", DateTime.Now);
                 await cmd.ExecuteNonQueryAsync();
+                Console.WriteLine($"[INFO] Dodano nowy depozytor.");
             }
         }
 
@@ -85,12 +92,16 @@ namespace KeyLockerSync.Data
         {
             using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
+            Console.WriteLine($"[DEBUG] InsertKeys Rozpoczynam przetwarzanie {keys.Count} kluczy...");
+
             foreach (var key in keys)
             {
-                // KROK 1: Znajdź LOKALNE id urządzenia na podstawie GID klucza
+                Console.WriteLine($"\n[DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='{key.KeyIdExt}', Name='{key.Name}', Gid='{key.Gid}', DeviceId z API='{key.DeviceId}'.");
+
                 int? localDeviceId = null;
                 if (!string.IsNullOrEmpty(key.Gid))
                 {
+                    Console.WriteLine($"[DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='{key.Gid}'...");
                     using (var findCmd = new SqlCommand("SELECT id FROM dbo.keyLocker_device WHERE gid = @gid", conn))
                     {
                         findCmd.Parameters.AddWithValue("@gid", key.Gid);
@@ -98,19 +109,28 @@ namespace KeyLockerSync.Data
                         if (result != null && result != DBNull.Value)
                         {
                             localDeviceId = Convert.ToInt32(result);
+                            Console.WriteLine($"[DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: {localDeviceId}.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[DEBUG] InsertKeys NIE ZNALEZIONO lokalnego ID urządzenia dla Gid='{key.Gid}'.");
                         }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("[DEBUG] InsertKeys Gid dla klucza jest pusty, nie mogę znaleźć lokalnego ID.");
+                }
 
-                // KROK 2: Jeśli znaleziono lokalne ID, wstaw klucz z poprawnym ID
                 if (localDeviceId.HasValue)
                 {
+                    Console.WriteLine($"[DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId={key.KeyId}, @deviceId={localDeviceId.Value}, @keyIdExt='{key.KeyIdExt}', @name='{key.Name}'.");
                     using var cmd = new SqlCommand("keyLocker_key_get", conn)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
                     cmd.Parameters.AddWithValue("@keyId", key.KeyId);
-                    cmd.Parameters.AddWithValue("@deviceId", localDeviceId.Value); // Używamy znalezionego LOKALNEGO ID
+                    cmd.Parameters.AddWithValue("@deviceId", localDeviceId.Value);
                     cmd.Parameters.AddWithValue("@gid", (object)key.Gid ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@keyIdExt", key.KeyIdExt);
                     cmd.Parameters.AddWithValue("@serialNumberExt", (object)key.SerialNumberExt ?? DBNull.Value);
@@ -118,12 +138,14 @@ namespace KeyLockerSync.Data
                     cmd.Parameters.AddWithValue("@createdAt", key.CreatedAt);
                     cmd.Parameters.AddWithValue("@updatedAt", (object)key.UpdatedAt ?? DBNull.Value);
                     await cmd.ExecuteNonQueryAsync();
+                    Console.WriteLine("[DEBUG] InsertKeys Procedura wykonana pomyślnie.");
                 }
                 else
                 {
-                    Console.WriteLine($"[WARN] Pomijam klucz '{key.KeyIdExt}', ponieważ urządzenie nadrzędne (Gid={key.Gid}) nie zostało jeszcze zsynchronizowane.");
+                    Console.WriteLine($"[WARN] InsertKeys Pomijam klucz '{key.KeyIdExt}', ponieważ nie udało się znaleźć lokalnego ID dla jego urządzenia (Gid='{key.Gid}').");
                 }
             }
+            Console.WriteLine($"[DEBUG] InsertKeys Zakończono przetwarzanie kluczy.");
         }
 
         public async Task InsertKeyStatesAsync(List<KeyState> keyStates)
@@ -298,9 +320,48 @@ namespace KeyLockerSync.Data
             }
             return null;
         }
+        /*
+        /// <summary>
+        /// Pobiera dane o powiązaniu klucz-użytkownik na podstawie ID z tabeli audytu.
+        /// </summary>
+        public async Task<object> GetKeyUserDataAsync(string objectId)
+        {
+            if (!int.TryParse(objectId, out int keyUserId))
+            {
+                Console.WriteLine($"[ERROR] Nieprawidłowy format Object_ID dla KeyUser: '{objectId}'. Oczekiwano pojedynczej liczby.");
+                return null;
+            }
 
+            KeyUser keyUser = null;
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
 
+            // Wykonujemy bezpośrednie zapytanie, aby znaleźć idautoid i key_id
+            string query = "SELECT idautoid, key_id FROM unisuser.tAID_KeyUsers WHERE id = @id";
 
+            using (var cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", keyUserId);
+                using var reader = await cmd.ExecuteReaderAsync();
+                if (await reader.ReadAsync())
+                {
+                    keyUser = new KeyUser
+                    {
+                        OwnerIdApi = reader["idautoid"].ToString(),
+                        KeyIds = new List<int> { Convert.ToInt32(reader["key_id"]) }
+                    };
+                }
+            }
+
+            if (keyUser == null)
+            {
+                Console.WriteLine($"[WARN] Nie znaleziono danych dla powiązania KeyUser o ID={keyUserId}. Rekord mógł zostać usunięty.");
+            }
+
+            return keyUser;
+        }
+
+        */
         public void MarkAuditProcessed(int id)
         {
             using var conn = new SqlConnection(_connectionString);

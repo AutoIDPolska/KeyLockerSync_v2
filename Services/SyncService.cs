@@ -43,6 +43,17 @@ namespace KeyLockerSync.Services
                 {
                     GetDataFunc = (dbh, objectId) => dbh.GetKeyDataAsync(objectId),
                     SendDataFunc = (apisvc, obj, method) => apisvc.UpdateKeyNameAsync(obj, method)
+                },
+                /*
+                ["KEYUSER"] = new ActionMapping
+                {
+                    GetDataFunc = (dbh, objectId) => dbh.GetKeyUserDataAsync(objectId),
+                    SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignKeyAsync(obj, method)
+                }*/
+                ["KEYUSER"] = new ActionMapping
+                {
+                    GetDataFunc = null, // Nie używamy już tej funkcji
+                    SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignKeyAsync(obj, method)
                 }
 
             };
@@ -63,12 +74,30 @@ namespace KeyLockerSync.Services
                 object data = null;
                 try
                 {
-                    data = await mapping.GetDataFunc(_db, audit.Object_ID);
+                    // *** KLUCZOWA ZMIANA: Specjalna obsługa dla KEYUSER ***
+                    if (audit.Object_Type?.ToUpper() == "KEYUSER")
+                    {
+                        // Tworzymy obiekt KeyUser bezpośrednio z danych audytu
+                        if (string.IsNullOrEmpty(audit.Additional_ID) || !int.TryParse(audit.Object_ID, out int keyId))
+                        {
+                            Console.WriteLine($"[ERROR] Nieprawidłowy format danych dla KeyUser w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'.");
+                            continue; // Pomiń ten wadliwy rekord
+                        }
+                        data = new KeyUser
+                        {
+                            OwnerIdApi = audit.Additional_ID,
+                            KeyIds = new List<int> { keyId }
+                        };
+                    }
+                    else
+                    {
+                        // Standardowa ścieżka dla wszystkich innych typów obiektów
+                        data = await mapping.GetDataFunc(_db, audit.Object_ID);
+                    }
+
                     if (data == null)
                     {
                         Console.WriteLine($"[WARN] Brak danych dla {audit.Object_Type} ID={audit.Object_ID}. Audyt mógł być przestarzały.");
-                        // Opcjonalnie: oznacz audyt jako przetworzony, jeśli dane już nie istnieją
-                        // _db.MarkAuditProcessed(audit.ID);
                         continue;
                     }
 
@@ -78,7 +107,7 @@ namespace KeyLockerSync.Services
                         "INSERT" => HttpMethod.Post,
                         "UPDATE" => HttpMethod.Put,
                         "DELETE" => HttpMethod.Delete,
-                        _ => HttpMethod.Post // Domyślnie POST
+                        _ => HttpMethod.Post
                     };
 
                     bool success = await mapping.SendDataFunc(_api, data, method);
