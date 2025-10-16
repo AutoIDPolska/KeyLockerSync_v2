@@ -221,7 +221,7 @@ namespace KeyLockerSync.Data
                     Gid = reader["gid"].ToString(),
                     GroupIdApi = reader["groupIdApi"].ToString(), // Zwracamy jako string
                     Name = reader["name"].ToString(),
-                    Description = "" // Procedura nie zwraca opisu, więc ustawiamy pusty
+                    Description = "" 
                 };
             }
             return null;
@@ -292,9 +292,9 @@ namespace KeyLockerSync.Data
 
             return person;
         }
-        /// <summary>
-        /// Pobiera dane klucza (ID i nazwę) na potrzeby audytu aktualizacji.
-        /// </summary>
+       
+        // Pobiera dane klucza (ID i nazwę) na potrzeby audytu aktualizacji.
+       
         public async Task<object> GetKeyDataAsync(string keyId)
         {
             using var conn = new SqlConnection(_connectionString);
@@ -326,52 +326,9 @@ namespace KeyLockerSync.Data
             }
             return null;
         }
-        /*
-        /// <summary>
-        /// Pobiera dane o powiązaniu klucz-użytkownik na podstawie ID z tabeli audytu.
-        /// </summary>
-        public async Task<object> GetKeyUserDataAsync(string objectId)
-        {
-            if (!int.TryParse(objectId, out int keyUserId))
-            {
-                Console.WriteLine($"[ERROR] Nieprawidłowy format Object_ID dla KeyUser: '{objectId}'. Oczekiwano pojedynczej liczby.");
-                return null;
-            }
-
-            KeyUser keyUser = null;
-            using var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync();
-
-            // Wykonujemy bezpośrednie zapytanie, aby znaleźć idautoid i key_id
-            string query = "SELECT idautoid, key_id FROM unisuser.tAID_KeyUsers WHERE id = @id";
-
-            using (var cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@id", keyUserId);
-                using var reader = await cmd.ExecuteReaderAsync();
-                if (await reader.ReadAsync())
-                {
-                    keyUser = new KeyUser
-                    {
-                        OwnerIdApi = reader["idautoid"].ToString(),
-                        KeyIds = new List<int> { Convert.ToInt32(reader["key_id"]) }
-                    };
-                }
-            }
-
-            if (keyUser == null)
-            {
-                Console.WriteLine($"[WARN] Nie znaleziono danych dla powiązania KeyUser o ID={keyUserId}. Rekord mógł zostać usunięty.");
-            }
-
-            return keyUser;
-        }
-
-        */
-
-        /// <summary>
-        /// Pobiera dane rezerwacji na podstawie jej ID z audytu.
-        /// </summary>
+        
+        // Pobiera dane rezerwacji na podstawie jej ID z audytu.
+       
         public async Task<object> GetReservationDataAsync(string reservationId)
         {
             if (!int.TryParse(reservationId, out int id))
@@ -406,9 +363,9 @@ namespace KeyLockerSync.Data
             return null;
         }
 
-        /// <summary>
-        /// Pobiera dane poświadczenia (dla operacji INSERT).
-        /// </summary>
+       
+        // Pobiera dane poświadczenia (dla operacji INSERT).
+        
         public async Task<object> GetCredentialDataAsync(string credential)
         {
             using var conn = new SqlConnection(_connectionString);

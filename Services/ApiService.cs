@@ -115,15 +115,8 @@ namespace KeyLockerSync.Services
             }
         }
 
-        // =================================================================================
-        // *** POCZĄTEK ZMIANY - DODANO BRAKUJĄCĄ METODĘ UpdateKeyNameAsync ***
-        // Ta metoda była wywoływana w SyncService, ale brakowało jej definicji,
-        // co powodowało błąd kompilacji.
-        // =================================================================================
-
-        /// <summary>
-        /// Aktualizuje nazwę klucza w API (dla Object_Type: key, Action_Type: update).
-        /// </summary>
+        // Aktualizuje nazwę klucza w API (dla Object_Type: key, Action_Type: update).
+        
         public async Task<bool> UpdateKeyNameAsync(object obj, HttpMethod method)
         {
             // Metoda obsługuje tylko operacje PUT dla obiektu Key
@@ -158,11 +151,7 @@ namespace KeyLockerSync.Services
             }
         }
 
-        // =================================================================================
-        // *** KONIEC ZMIANY ***
-        // =================================================================================
-
-
+        
         // Wysyłka obiektu Device (POST/PUT/DELETE)
         public async Task<bool> SendDeviceAsync(object obj, HttpMethod method)
         {
@@ -392,9 +381,9 @@ namespace KeyLockerSync.Services
             }
         }
 
-        /// <summary>
-        /// Przypisuje (POST) lub odbiera (DELETE) klucze osobie, używając keyIdExts.
-        /// </summary>
+        
+        // Przypisuje (POST) lub odbiera (DELETE) klucze osobie, używając keyIdExts.
+        
         public async Task<bool> AssignOrUnassignKeyAsync(object obj, HttpMethod method)
         {
             if (obj is not KeyUser keyUser)
@@ -429,9 +418,9 @@ namespace KeyLockerSync.Services
             }
         }
 
-        /// <summary>
-        /// Wysyła dane rezerwacji (POST, PUT, DELETE).
-        /// </summary>
+        
+        // Wysyła dane rezerwacji (POST, PUT, DELETE).
+       
         public async Task<bool> SendReservationAsync(object obj, HttpMethod method)
         {
             if (obj is not Reservation reservation)

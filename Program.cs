@@ -10,7 +10,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        // *** KLUCZOWA ZMIANA: Inicjalizacja logowania do pliku ***
+      
         string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
         var fileLogger = new FileLogger(logFilePath);
         Console.SetOut(fileLogger); // Przekierowanie standardowego wyjścia konsoli
@@ -56,7 +56,6 @@ class Program
         }
         finally
         {
-            // Upewniamy się, że plik logów jest zawsze poprawnie zamykany
             fileLogger?.Close();
         }
     }

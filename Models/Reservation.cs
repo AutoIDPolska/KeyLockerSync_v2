@@ -14,7 +14,6 @@ namespace KeyLockerSync.Models
         [JsonPropertyName("ownerIdApi")]
         public string OwnerIdApi { get; set; }
 
-        // Poprawnie zdefiniowane jako 'string'
         [JsonPropertyName("keyIdExt")]
         public string KeyIdExt { get; set; }
 

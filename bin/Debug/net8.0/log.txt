@@ -6087,3 +6087,1206 @@
 2025-10-16 13:34:52 | HTTP POST /persons/2080/credentials -> Conflict
 2025-10-16 13:34:52 | Response body: This credential already exists for the person.
 2025-10-16 13:34:52 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:19:39 | ==================================================
+2025-10-16 14:19:39 | Uruchamianie KeyLockerSync...
+2025-10-16 14:19:39 | Synchronizacja audytu co: 30 sek.
+2025-10-16 14:19:39 | Synchronizacja urządzeń co: 1000 sek.
+2025-10-16 14:19:39 | Synchronizacja kluczy co: 1000 sek.
+2025-10-16 14:19:39 | Synchronizacja stanów kluczy co: 1000 sek.
+
+2025-10-16 14:19:40 | 
+--- Rozpoczynam cykl synchronizacji urządzeń ---
+2025-10-16 14:19:40 | [INFO] Wykonuję GET /devices
+2025-10-16 14:19:40 | 
+--- Rozpoczynam cykl synchronizacji kluczy ---
+2025-10-16 14:19:40 | [INFO] Wykonuję GET /keys
+2025-10-16 14:19:40 | 
+--- Rozpoczynam cykl synchronizacji stanów kluczy ---
+2025-10-16 14:19:40 | [INFO] Wykonuję GET /keys/states
+2025-10-16 14:19:40 | [INFO] GET /keys - Pobrano 27 kluczy
+2025-10-16 14:19:40 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='2359', Name='Test23456', Status='online'
+2025-10-16 14:19:40 | HTTP POST /persons -> Conflict
+2025-10-16 14:19:40 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:19:40 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:19:40 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:19:40 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='166', Name='Test / G166', Status='online'
+2025-10-16 14:19:40 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:19:40 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='3', Name='testpz1', Status='online'
+2025-10-16 14:19:40 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:19:40 | [INFO] Przetworzono 3 urządzeń.
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Rozpoczynam przetwarzanie 27 kluczy...
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_13', Name='asd', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:40 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=1, @deviceId=13, @keyIdExt='166_13', @name='asd'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_15', Name='Klucz 3 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=2, @deviceId=13, @keyIdExt='166_15', @name='Klucz 3 - stary'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_16', Name='Klucz 4 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:40 | HTTP POST /persons -> BadRequest
+2025-10-16 14:19:40 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:19:40 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=3, @deviceId=13, @keyIdExt='166_16', @name='Klucz 4 - stary'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_17', Name='Klucz 5 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=4, @deviceId=13, @keyIdExt='166_17', @name='Klucz 5 - stary'.
+2025-10-16 14:19:40 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:19:40 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-fbc6385ad04e42859d246632f1b44106-48532a370247171e-00"}
+2025-10-16 14:19:40 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_18', Name='Klucz 6 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:40 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:19:40 | Response body: Person not found.
+2025-10-16 14:19:40 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=5, @deviceId=13, @keyIdExt='166_18', @name='Klucz 6 - stary'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_19', Name='Klucz 7 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:40 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=6, @deviceId=13, @keyIdExt='166_19', @name='Klucz 7 - stary'.
+2025-10-16 14:19:40 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:19:40 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-32f67474be3e6336c38b1721bf3aa3db-cd09d91feaa76173-00"}
+2025-10-16 14:19:40 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_20', Name='Klucz 8 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:40 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:19:40 | Response body: Person not found.
+2025-10-16 14:19:40 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=7, @deviceId=13, @keyIdExt='166_20', @name='Klucz 8 - stary'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_21', Name='Klucz 9 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:40 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=8, @deviceId=13, @keyIdExt='166_21', @name='Klucz 9 - stary'.
+2025-10-16 14:19:41 | HTTP POST /reservations -> NotFound
+2025-10-16 14:19:41 | Response body: Person not found.
+2025-10-16 14:19:41 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_24', Name='Skrytka prawa -nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=9, @deviceId=13, @keyIdExt='166_24', @name='Skrytka prawa -nowy'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_27', Name='Klucz 1 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:19:41 | Response body: This credential already exists for the person.
+2025-10-16 14:19:41 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:19:41 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=10, @deviceId=13, @keyIdExt='166_27', @name='Klucz 1 - stary'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_29', Name='Klucz 10 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=11, @deviceId=13, @keyIdExt='166_29', @name='Klucz 10 - stary'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | HTTP PUT /persons/2081 -> NoContent
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_30', Name='Skrytka lewa - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla user ID=2081, Akcja=update
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=12, @deviceId=13, @keyIdExt='166_30', @name='Skrytka lewa - nowy'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_1', Name='Klucz 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:19:41 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=13, @deviceId=13, @keyIdExt='2359_1', @name='Klucz 2 - nowy'.
+2025-10-16 14:19:41 | HTTP DELETE /persons/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby . Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_2', Name='Klucz 1 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=49162947, Akcja=delete
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=14, @deviceId=13, @keyIdExt='2359_2', @name='Klucz 1 - nowy'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_3', Name='Klucz 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | HTTP POST /persons/2052/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby 2052. Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=15, @deviceId=13, @keyIdExt='2359_3', @name='Klucz 3 - nowy'.
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=49162947, Akcja=insert
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_4', Name='Klucz 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | HTTP DELETE /persons/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby . Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=16, @deviceId=13, @keyIdExt='2359_4', @name='Klucz 4 - nowy'.
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=49162947, Akcja=delete
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_5', Name='Klucz 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=17, @deviceId=13, @keyIdExt='2359_5', @name='Klucz 5 - nowy'.
+2025-10-16 14:19:41 | HTTP POST /persons/2052/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby 2052. Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_6', Name='Holder 1 - nowy PS', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=49162947, Akcja=insert
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=18, @deviceId=13, @keyIdExt='2359_6', @name='Holder 1 - nowy PS'.
+2025-10-16 14:19:41 | HTTP DELETE /persons/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby . Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_7', Name='Holder 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=49162947, Akcja=delete
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=19, @deviceId=13, @keyIdExt='2359_7', @name='Holder 2 - nowy'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_8', Name='Holder 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | HTTP POST /persons/2052/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby 2052. Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=20, @deviceId=13, @keyIdExt='2359_8', @name='Holder 3 - nowy'.
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=49162947, Akcja=insert
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_9', Name='Holder 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | HTTP DELETE /persons/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby . Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=21, @deviceId=13, @keyIdExt='2359_9', @name='Holder 4 - nowy'.
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=20525025, Akcja=delete
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_10', Name='Holder 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [INFO] Przetworzono 23 stanów kluczy.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=22, @deviceId=13, @keyIdExt='2359_10', @name='Holder 5 - nowy'.
+2025-10-16 14:19:41 | HTTP POST /persons/2062/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby 2062. Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_11', Name='2359-1-011.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=20525025, Akcja=insert
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=23, @deviceId=13, @keyIdExt='2359_11', @name='2359-1-011.Key'.
+2025-10-16 14:19:41 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:19:41 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_12', Name='Klucz w skrytce - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:41 | HTTP DELETE /persons/credentials -> NotFound
+2025-10-16 14:19:41 | [WARN] API zwróciło 404 (Not Found) dla osoby . Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=24, @deviceId=13, @keyIdExt='2359_12', @name='Klucz w skrytce - nowy'.
+2025-10-16 14:19:41 | [INFO] Sukces: Przetworzono audyt dla credential ID=20525025, Akcja=delete
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_13', Name='Skrytka lewa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:41 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:42 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=25, @deviceId=13, @keyIdExt='2359_13', @name='Skrytka lewa - stary'.
+2025-10-16 14:19:42 | HTTP POST /persons/2062/credentials -> NotFound
+2025-10-16 14:19:42 | [WARN] API zwróciło 404 (Not Found) dla osoby 2062. Audyt zostanie oznaczony jako przetworzony.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_14', Name='Skrytka prawa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:42 | [INFO] Sukces: Przetworzono audyt dla credential ID=20525025, Akcja=insert
+2025-10-16 14:19:42 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=26, @deviceId=13, @keyIdExt='2359_14', @name='Skrytka prawa - stary'.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_15', Name='2359-1-010.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:19:42 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=27, @deviceId=13, @keyIdExt='2359_15', @name='2359-1-010.Key'.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:19:42 | [DEBUG] InsertKeys Zakończono przetwarzanie kluczy.
+2025-10-16 14:19:42 | [INFO] Przetworzono 27 kluczy.
+2025-10-16 14:20:12 | HTTP POST /persons -> Conflict
+2025-10-16 14:20:12 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:20:12 | HTTP POST /persons -> BadRequest
+2025-10-16 14:20:12 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:20:12 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:20:12 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-830247e4c03f7309c2541e15c6f30d9e-fd2af1f94547c752-00"}
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:20:12 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:20:12 | Response body: Person not found.
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:20:12 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:20:12 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-eebb1260072a3f0aee34ab3682f703a0-f5ca9a6453769964-00"}
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:20:12 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:20:12 | Response body: Person not found.
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:20:12 | HTTP POST /reservations -> NotFound
+2025-10-16 14:20:12 | Response body: Person not found.
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:20:12 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:20:12 | Response body: This credential already exists for the person.
+2025-10-16 14:20:12 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:20:12 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:20:12 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:20:12 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:20:12 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:20:12 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:20:42 | HTTP POST /persons -> Conflict
+2025-10-16 14:20:42 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:20:42 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:20:42 | HTTP POST /persons -> BadRequest
+2025-10-16 14:20:42 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:20:42 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:20:43 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:20:43 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-53728ac700446d00e5e77683a7468645-b0eee488e8d12c9b-00"}
+2025-10-16 14:20:43 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:20:43 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:20:43 | Response body: Person not found.
+2025-10-16 14:20:43 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:20:43 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:20:43 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-ca8673eaa9cde244414988d94ddc0328-a604bc5de8ce3e8d-00"}
+2025-10-16 14:20:43 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:20:43 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:20:43 | Response body: Person not found.
+2025-10-16 14:20:43 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:20:43 | HTTP POST /reservations -> NotFound
+2025-10-16 14:20:43 | Response body: Person not found.
+2025-10-16 14:20:43 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:20:43 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:20:43 | Response body: This credential already exists for the person.
+2025-10-16 14:20:43 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:20:43 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:20:43 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:20:43 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:20:43 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:20:43 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:21:13 | HTTP POST /persons -> Conflict
+2025-10-16 14:21:13 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:21:13 | HTTP POST /persons -> BadRequest
+2025-10-16 14:21:13 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:21:13 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:21:13 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-20644ba2c25bd5dd0f0acc6d6de03b30-74eedf1c99d755ea-00"}
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:21:13 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:21:13 | Response body: Person not found.
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:21:13 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:21:13 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-55745f531ba7f2785ec8039a7074912d-d98c13008d1fc37d-00"}
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:21:13 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:21:13 | Response body: Person not found.
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:21:13 | HTTP POST /reservations -> NotFound
+2025-10-16 14:21:13 | Response body: Person not found.
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:21:13 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:21:13 | Response body: This credential already exists for the person.
+2025-10-16 14:21:13 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:21:13 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:21:13 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:21:13 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:21:13 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:21:13 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:23:19 | ==================================================
+2025-10-16 14:23:19 | Uruchamianie KeyLockerSync...
+2025-10-16 14:23:19 | Synchronizacja audytu co: 30 sek.
+2025-10-16 14:23:19 | Synchronizacja urządzeń co: 1000 sek.
+2025-10-16 14:23:19 | Synchronizacja kluczy co: 1000 sek.
+2025-10-16 14:23:19 | Synchronizacja stanów kluczy co: 1000 sek.
+
+2025-10-16 14:23:20 | 
+--- Rozpoczynam cykl synchronizacji urządzeń ---
+2025-10-16 14:23:20 | [INFO] Wykonuję GET /devices
+2025-10-16 14:23:20 | 
+--- Rozpoczynam cykl synchronizacji kluczy ---
+2025-10-16 14:23:20 | [INFO] Wykonuję GET /keys
+2025-10-16 14:23:20 | 
+--- Rozpoczynam cykl synchronizacji stanów kluczy ---
+2025-10-16 14:23:20 | [INFO] Wykonuję GET /keys/states
+2025-10-16 14:23:20 | [INFO] GET /keys - Pobrano 27 kluczy
+2025-10-16 14:23:20 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='2359', Name='Test23456', Status='online'
+2025-10-16 14:23:20 | HTTP POST /persons -> Conflict
+2025-10-16 14:23:20 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:23:20 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:23:20 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:23:20 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='166', Name='Test / G166', Status='online'
+2025-10-16 14:23:20 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:23:20 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='3', Name='testpz1', Status='online'
+2025-10-16 14:23:20 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:23:20 | [INFO] Przetworzono 3 urządzeń.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Rozpoczynam przetwarzanie 27 kluczy...
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_13', Name='asd', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:20 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=1, @deviceId=13, @keyIdExt='166_13', @name='asd'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_15', Name='Klucz 3 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:20 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=2, @deviceId=13, @keyIdExt='166_15', @name='Klucz 3 - stary'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_16', Name='Klucz 4 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:20 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=3, @deviceId=13, @keyIdExt='166_16', @name='Klucz 4 - stary'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_17', Name='Klucz 5 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:20 | HTTP POST /persons -> BadRequest
+2025-10-16 14:23:20 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:23:20 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=4, @deviceId=13, @keyIdExt='166_17', @name='Klucz 5 - stary'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_18', Name='Klucz 6 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:20 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=5, @deviceId=13, @keyIdExt='166_18', @name='Klucz 6 - stary'.
+2025-10-16 14:23:20 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:23:20 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-746d4f2b95ceb3557c477da80a629e15-b92db272e5ef76c1-00"}
+2025-10-16 14:23:20 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:23:20 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_19', Name='Klucz 7 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:20 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:23:20 | Response body: Person not found.
+2025-10-16 14:23:20 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=6, @deviceId=13, @keyIdExt='166_19', @name='Klucz 7 - stary'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_20', Name='Klucz 8 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:20 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:20 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=7, @deviceId=13, @keyIdExt='166_20', @name='Klucz 8 - stary'.
+2025-10-16 14:23:21 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:23:21 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-29064914a819e816eaf9366bae02195d-1ee815713c4a3c8d-00"}
+2025-10-16 14:23:21 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_21', Name='Klucz 9 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=8, @deviceId=13, @keyIdExt='166_21', @name='Klucz 9 - stary'.
+2025-10-16 14:23:21 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:23:21 | Response body: Person not found.
+2025-10-16 14:23:21 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_24', Name='Skrytka prawa -nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=9, @deviceId=13, @keyIdExt='166_24', @name='Skrytka prawa -nowy'.
+2025-10-16 14:23:21 | HTTP POST /reservations -> NotFound
+2025-10-16 14:23:21 | Response body: Person not found.
+2025-10-16 14:23:21 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_27', Name='Klucz 1 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=10, @deviceId=13, @keyIdExt='166_27', @name='Klucz 1 - stary'.
+2025-10-16 14:23:21 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:23:21 | Response body: This credential already exists for the person.
+2025-10-16 14:23:21 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:23:21 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_29', Name='Klucz 10 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=11, @deviceId=13, @keyIdExt='166_29', @name='Klucz 10 - stary'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_30', Name='Skrytka lewa - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:23:21 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=12, @deviceId=13, @keyIdExt='166_30', @name='Skrytka lewa - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_1', Name='Klucz 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=13, @deviceId=13, @keyIdExt='2359_1', @name='Klucz 2 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_2', Name='Klucz 1 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=14, @deviceId=13, @keyIdExt='2359_2', @name='Klucz 1 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_3', Name='Klucz 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=15, @deviceId=13, @keyIdExt='2359_3', @name='Klucz 3 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_4', Name='Klucz 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=16, @deviceId=13, @keyIdExt='2359_4', @name='Klucz 4 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_5', Name='Klucz 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=17, @deviceId=13, @keyIdExt='2359_5', @name='Klucz 5 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_6', Name='Holder 1 - nowy PS', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=18, @deviceId=13, @keyIdExt='2359_6', @name='Holder 1 - nowy PS'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_7', Name='Holder 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=19, @deviceId=13, @keyIdExt='2359_7', @name='Holder 2 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_8', Name='Holder 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=20, @deviceId=13, @keyIdExt='2359_8', @name='Holder 3 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_9', Name='Holder 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=21, @deviceId=13, @keyIdExt='2359_9', @name='Holder 4 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_10', Name='Holder 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=22, @deviceId=13, @keyIdExt='2359_10', @name='Holder 5 - nowy'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_11', Name='2359-1-011.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:23:21 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=23, @deviceId=13, @keyIdExt='2359_11', @name='2359-1-011.Key'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [INFO] Przetworzono 23 stanów kluczy.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_12', Name='Klucz w skrytce - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:23:21 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:06 | ==================================================
+2025-10-16 14:25:06 | Uruchamianie KeyLockerSync...
+2025-10-16 14:25:06 | Synchronizacja audytu co: 30 sek.
+2025-10-16 14:25:06 | Synchronizacja urządzeń co: 1000 sek.
+2025-10-16 14:25:06 | Synchronizacja kluczy co: 1000 sek.
+2025-10-16 14:25:06 | Synchronizacja stanów kluczy co: 1000 sek.
+
+2025-10-16 14:25:06 | 
+--- Rozpoczynam cykl synchronizacji urządzeń ---
+2025-10-16 14:25:06 | [INFO] Wykonuję GET /devices
+2025-10-16 14:25:06 | 
+--- Rozpoczynam cykl synchronizacji kluczy ---
+2025-10-16 14:25:06 | [INFO] Wykonuję GET /keys
+2025-10-16 14:25:06 | 
+--- Rozpoczynam cykl synchronizacji stanów kluczy ---
+2025-10-16 14:25:06 | [INFO] Wykonuję GET /keys/states
+2025-10-16 14:25:06 | [INFO] GET /keys - Pobrano 27 kluczy
+2025-10-16 14:25:06 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='2359', Name='Test23456', Status='online'
+2025-10-16 14:25:06 | HTTP POST /persons -> Conflict
+2025-10-16 14:25:06 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:25:06 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:25:07 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:25:07 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='166', Name='Test / G166', Status='online'
+2025-10-16 14:25:07 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:25:07 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='3', Name='testpz1', Status='online'
+2025-10-16 14:25:07 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:25:07 | [INFO] Przetworzono 3 urządzeń.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Rozpoczynam przetwarzanie 27 kluczy...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_13', Name='asd', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=1, @deviceId=13, @keyIdExt='166_13', @name='asd'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_15', Name='Klucz 3 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=2, @deviceId=13, @keyIdExt='166_15', @name='Klucz 3 - stary'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_16', Name='Klucz 4 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=3, @deviceId=13, @keyIdExt='166_16', @name='Klucz 4 - stary'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_17', Name='Klucz 5 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=4, @deviceId=13, @keyIdExt='166_17', @name='Klucz 5 - stary'.
+2025-10-16 14:25:07 | HTTP POST /persons -> BadRequest
+2025-10-16 14:25:07 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:25:07 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_18', Name='Klucz 6 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=5, @deviceId=13, @keyIdExt='166_18', @name='Klucz 6 - stary'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_19', Name='Klucz 7 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:25:07 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-6f3231c4c78cee89fa0bd73d873b909e-02a6234d53f57a76-00"}
+2025-10-16 14:25:07 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=6, @deviceId=13, @keyIdExt='166_19', @name='Klucz 7 - stary'.
+2025-10-16 14:25:07 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:25:07 | Response body: Person not found.
+2025-10-16 14:25:07 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_20', Name='Klucz 8 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=7, @deviceId=13, @keyIdExt='166_20', @name='Klucz 8 - stary'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_21', Name='Klucz 9 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:25:07 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-3ba7067232cc4a23dd9b0de699850c3d-5e401e467972a732-00"}
+2025-10-16 14:25:07 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=8, @deviceId=13, @keyIdExt='166_21', @name='Klucz 9 - stary'.
+2025-10-16 14:25:07 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:25:07 | Response body: Person not found.
+2025-10-16 14:25:07 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_24', Name='Skrytka prawa -nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=9, @deviceId=13, @keyIdExt='166_24', @name='Skrytka prawa -nowy'.
+2025-10-16 14:25:07 | HTTP POST /reservations -> NotFound
+2025-10-16 14:25:07 | Response body: Person not found.
+2025-10-16 14:25:07 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_27', Name='Klucz 1 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=10, @deviceId=13, @keyIdExt='166_27', @name='Klucz 1 - stary'.
+2025-10-16 14:25:07 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:25:07 | Response body: This credential already exists for the person.
+2025-10-16 14:25:07 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:25:07 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_29', Name='Klucz 10 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=11, @deviceId=13, @keyIdExt='166_29', @name='Klucz 10 - stary'.
+2025-10-16 14:25:07 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:25:07 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_30', Name='Skrytka lewa - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:25:07 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=12, @deviceId=13, @keyIdExt='166_30', @name='Skrytka lewa - nowy'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_1', Name='Klucz 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=13, @deviceId=13, @keyIdExt='2359_1', @name='Klucz 2 - nowy'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_2', Name='Klucz 1 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=14, @deviceId=13, @keyIdExt='2359_2', @name='Klucz 1 - nowy'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_3', Name='Klucz 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=15, @deviceId=13, @keyIdExt='2359_3', @name='Klucz 3 - nowy'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_4', Name='Klucz 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=16, @deviceId=13, @keyIdExt='2359_4', @name='Klucz 4 - nowy'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_5', Name='Klucz 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:07 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:07 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=17, @deviceId=13, @keyIdExt='2359_5', @name='Klucz 5 - nowy'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_6', Name='Holder 1 - nowy PS', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=18, @deviceId=13, @keyIdExt='2359_6', @name='Holder 1 - nowy PS'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_7', Name='Holder 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=19, @deviceId=13, @keyIdExt='2359_7', @name='Holder 2 - nowy'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_8', Name='Holder 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=20, @deviceId=13, @keyIdExt='2359_8', @name='Holder 3 - nowy'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_9', Name='Holder 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=21, @deviceId=13, @keyIdExt='2359_9', @name='Holder 4 - nowy'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_10', Name='Holder 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=22, @deviceId=13, @keyIdExt='2359_10', @name='Holder 5 - nowy'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_11', Name='2359-1-011.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=23, @deviceId=13, @keyIdExt='2359_11', @name='2359-1-011.Key'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_12', Name='Klucz w skrytce - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [INFO] Przetworzono 23 stanów kluczy.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=24, @deviceId=13, @keyIdExt='2359_12', @name='Klucz w skrytce - nowy'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_13', Name='Skrytka lewa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=25, @deviceId=13, @keyIdExt='2359_13', @name='Skrytka lewa - stary'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_14', Name='Skrytka prawa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=26, @deviceId=13, @keyIdExt='2359_14', @name='Skrytka prawa - stary'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_15', Name='2359-1-010.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:25:08 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=27, @deviceId=13, @keyIdExt='2359_15', @name='2359-1-010.Key'.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:25:08 | [DEBUG] InsertKeys Zakończono przetwarzanie kluczy.
+2025-10-16 14:25:08 | [INFO] Przetworzono 27 kluczy.
+2025-10-16 14:27:41 | ==================================================
+2025-10-16 14:27:41 | Uruchamianie KeyLockerSync...
+2025-10-16 14:27:42 | Synchronizacja audytu co: 30 sek.
+2025-10-16 14:27:42 | Synchronizacja urządzeń co: 1000 sek.
+2025-10-16 14:27:42 | Synchronizacja kluczy co: 1000 sek.
+2025-10-16 14:27:42 | Synchronizacja stanów kluczy co: 1000 sek.
+
+2025-10-16 14:27:42 | 
+--- Rozpoczynam cykl synchronizacji urządzeń ---
+2025-10-16 14:27:42 | [INFO] Wykonuję GET /devices
+2025-10-16 14:27:42 | 
+--- Rozpoczynam cykl synchronizacji kluczy ---
+2025-10-16 14:27:42 | [INFO] Wykonuję GET /keys
+2025-10-16 14:27:42 | 
+--- Rozpoczynam cykl synchronizacji stanów kluczy ---
+2025-10-16 14:27:42 | [INFO] Wykonuję GET /keys/states
+2025-10-16 14:27:42 | [INFO] GET /keys - Pobrano 27 kluczy
+2025-10-16 14:27:42 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='2359', Name='Test23456', Status='online'
+2025-10-16 14:27:42 | HTTP POST /persons -> Conflict
+2025-10-16 14:27:42 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:27:42 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:27:42 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:27:42 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='166', Name='Test / G166', Status='online'
+2025-10-16 14:27:42 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:27:42 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='3', Name='testpz1', Status='online'
+2025-10-16 14:27:42 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:27:42 | [INFO] Przetworzono 3 urządzeń.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Rozpoczynam przetwarzanie 27 kluczy...
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_13', Name='asd', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:42 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=1, @deviceId=13, @keyIdExt='166_13', @name='asd'.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_15', Name='Klucz 3 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:42 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:42 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=2, @deviceId=13, @keyIdExt='166_15', @name='Klucz 3 - stary'.
+2025-10-16 14:27:42 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_16', Name='Klucz 4 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:42 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=3, @deviceId=13, @keyIdExt='166_16', @name='Klucz 4 - stary'.
+2025-10-16 14:27:42 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:42 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_17', Name='Klucz 5 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=4, @deviceId=13, @keyIdExt='166_17', @name='Klucz 5 - stary'.
+2025-10-16 14:27:43 | HTTP POST /persons -> BadRequest
+2025-10-16 14:27:43 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:27:43 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_18', Name='Klucz 6 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=5, @deviceId=13, @keyIdExt='166_18', @name='Klucz 6 - stary'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_19', Name='Klucz 7 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:27:43 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-246e837ad434d5003a375a6197cfcc66-0dfc7c500ee77f8f-00"}
+2025-10-16 14:27:43 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=6, @deviceId=13, @keyIdExt='166_19', @name='Klucz 7 - stary'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_20', Name='Klucz 8 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:27:43 | Response body: Person not found.
+2025-10-16 14:27:43 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=7, @deviceId=13, @keyIdExt='166_20', @name='Klucz 8 - stary'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_21', Name='Klucz 9 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=8, @deviceId=13, @keyIdExt='166_21', @name='Klucz 9 - stary'.
+2025-10-16 14:27:43 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:27:43 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-143cbe999dd735ec3cdd6bc32948dcfa-6dd4dad43d00d651-00"}
+2025-10-16 14:27:43 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_24', Name='Skrytka prawa -nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=9, @deviceId=13, @keyIdExt='166_24', @name='Skrytka prawa -nowy'.
+2025-10-16 14:27:43 | Response body: Person not found.
+2025-10-16 14:27:43 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_27', Name='Klucz 1 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=10, @deviceId=13, @keyIdExt='166_27', @name='Klucz 1 - stary'.
+2025-10-16 14:27:43 | HTTP POST /reservations -> NotFound
+2025-10-16 14:27:43 | Response body: Person not found.
+2025-10-16 14:27:43 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_29', Name='Klucz 10 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=11, @deviceId=13, @keyIdExt='166_29', @name='Klucz 10 - stary'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:27:43 | Response body: This credential already exists for the person.
+2025-10-16 14:27:43 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:27:43 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_30', Name='Skrytka lewa - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:27:43 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=12, @deviceId=13, @keyIdExt='166_30', @name='Skrytka lewa - nowy'.
+2025-10-16 14:27:43 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:27:43 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_1', Name='Klucz 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=13, @deviceId=13, @keyIdExt='2359_1', @name='Klucz 2 - nowy'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_2', Name='Klucz 1 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=14, @deviceId=13, @keyIdExt='2359_2', @name='Klucz 1 - nowy'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_3', Name='Klucz 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=15, @deviceId=13, @keyIdExt='2359_3', @name='Klucz 3 - nowy'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_4', Name='Klucz 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=16, @deviceId=13, @keyIdExt='2359_4', @name='Klucz 4 - nowy'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_5', Name='Klucz 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=17, @deviceId=13, @keyIdExt='2359_5', @name='Klucz 5 - nowy'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_6', Name='Holder 1 - nowy PS', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=18, @deviceId=13, @keyIdExt='2359_6', @name='Holder 1 - nowy PS'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_7', Name='Holder 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=19, @deviceId=13, @keyIdExt='2359_7', @name='Holder 2 - nowy'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_8', Name='Holder 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:43 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:43 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=20, @deviceId=13, @keyIdExt='2359_8', @name='Holder 3 - nowy'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_9', Name='Holder 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:44 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=21, @deviceId=13, @keyIdExt='2359_9', @name='Holder 4 - nowy'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_10', Name='Holder 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:44 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=22, @deviceId=13, @keyIdExt='2359_10', @name='Holder 5 - nowy'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_11', Name='2359-1-011.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:44 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=23, @deviceId=13, @keyIdExt='2359_11', @name='2359-1-011.Key'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_12', Name='Klucz w skrytce - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:44 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=24, @deviceId=13, @keyIdExt='2359_12', @name='Klucz w skrytce - nowy'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [INFO] Przetworzono 23 stanów kluczy.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_13', Name='Skrytka lewa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:44 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=25, @deviceId=13, @keyIdExt='2359_13', @name='Skrytka lewa - stary'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_14', Name='Skrytka prawa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:44 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=26, @deviceId=13, @keyIdExt='2359_14', @name='Skrytka prawa - stary'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_15', Name='2359-1-010.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:27:44 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=27, @deviceId=13, @keyIdExt='2359_15', @name='2359-1-010.Key'.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:27:44 | [DEBUG] InsertKeys Zakończono przetwarzanie kluczy.
+2025-10-16 14:27:44 | [INFO] Przetworzono 27 kluczy.
+2025-10-16 14:28:52 | ==================================================
+2025-10-16 14:28:52 | Uruchamianie KeyLockerSync...
+2025-10-16 14:28:52 | Synchronizacja audytu co: 30 sek.
+2025-10-16 14:28:52 | Synchronizacja urządzeń co: 1000 sek.
+2025-10-16 14:28:52 | Synchronizacja kluczy co: 1000 sek.
+2025-10-16 14:28:52 | Synchronizacja stanów kluczy co: 1000 sek.
+
+2025-10-16 14:28:53 | 
+--- Rozpoczynam cykl synchronizacji urządzeń ---
+2025-10-16 14:28:53 | [INFO] Wykonuję GET /devices
+2025-10-16 14:28:53 | 
+--- Rozpoczynam cykl synchronizacji kluczy ---
+2025-10-16 14:28:53 | [INFO] Wykonuję GET /keys
+2025-10-16 14:28:53 | 
+--- Rozpoczynam cykl synchronizacji stanów kluczy ---
+2025-10-16 14:28:53 | [INFO] Wykonuję GET /keys/states
+2025-10-16 14:28:53 | [INFO] GET /keys - Pobrano 27 kluczy
+2025-10-16 14:28:53 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='2359', Name='Test23456', Status='online'
+2025-10-16 14:28:53 | HTTP POST /persons -> Conflict
+2025-10-16 14:28:53 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:28:53 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:28:53 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:28:53 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='166', Name='Test / G166', Status='online'
+2025-10-16 14:28:53 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:28:53 | [DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='3', Name='testpz1', Status='online'
+2025-10-16 14:28:53 | [INFO] Dodano nowy depozytor.
+2025-10-16 14:28:53 | [INFO] Przetworzono 3 urządzeń.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Rozpoczynam przetwarzanie 27 kluczy...
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_13', Name='asd', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=1, @deviceId=13, @keyIdExt='166_13', @name='asd'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_15', Name='Klucz 3 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=2, @deviceId=13, @keyIdExt='166_15', @name='Klucz 3 - stary'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | HTTP POST /persons -> BadRequest
+2025-10-16 14:28:53 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:28:53 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_16', Name='Klucz 4 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=3, @deviceId=13, @keyIdExt='166_16', @name='Klucz 4 - stary'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_17', Name='Klucz 5 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:28:53 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-237f6cef358544f74b3bb5c6259920c0-be9937032921b03a-00"}
+2025-10-16 14:28:53 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=4, @deviceId=13, @keyIdExt='166_17', @name='Klucz 5 - stary'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_18', Name='Klucz 6 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:28:53 | Response body: Person not found.
+2025-10-16 14:28:53 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=5, @deviceId=13, @keyIdExt='166_18', @name='Klucz 6 - stary'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_19', Name='Klucz 7 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=6, @deviceId=13, @keyIdExt='166_19', @name='Klucz 7 - stary'.
+2025-10-16 14:28:53 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:28:53 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-d695e75c98580bf5abee03d10ab21e13-310844fdcced33da-00"}
+2025-10-16 14:28:53 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_20', Name='Klucz 8 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:28:53 | Response body: Person not found.
+2025-10-16 14:28:53 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=7, @deviceId=13, @keyIdExt='166_20', @name='Klucz 8 - stary'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_21', Name='Klucz 9 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:53 | HTTP POST /reservations -> NotFound
+2025-10-16 14:28:53 | Response body: Person not found.
+2025-10-16 14:28:53 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:53 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=8, @deviceId=13, @keyIdExt='166_21', @name='Klucz 9 - stary'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_24', Name='Skrytka prawa -nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:28:54 | Response body: This credential already exists for the person.
+2025-10-16 14:28:54 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:28:54 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=9, @deviceId=13, @keyIdExt='166_24', @name='Skrytka prawa -nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:28:54 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_27', Name='Klucz 1 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=10, @deviceId=13, @keyIdExt='166_27', @name='Klucz 1 - stary'.
+2025-10-16 14:28:54 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:28:54 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_29', Name='Klucz 10 - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=11, @deviceId=13, @keyIdExt='166_29', @name='Klucz 10 - stary'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='166_30', Name='Skrytka lewa - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=12, @deviceId=13, @keyIdExt='166_30', @name='Skrytka lewa - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_1', Name='Klucz 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=13, @deviceId=13, @keyIdExt='2359_1', @name='Klucz 2 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_2', Name='Klucz 1 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=14, @deviceId=13, @keyIdExt='2359_2', @name='Klucz 1 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_3', Name='Klucz 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=15, @deviceId=13, @keyIdExt='2359_3', @name='Klucz 3 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_4', Name='Klucz 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=16, @deviceId=13, @keyIdExt='2359_4', @name='Klucz 4 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_5', Name='Klucz 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=17, @deviceId=13, @keyIdExt='2359_5', @name='Klucz 5 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_6', Name='Holder 1 - nowy PS', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=18, @deviceId=13, @keyIdExt='2359_6', @name='Holder 1 - nowy PS'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_7', Name='Holder 2 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=19, @deviceId=13, @keyIdExt='2359_7', @name='Holder 2 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_8', Name='Holder 3 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=20, @deviceId=13, @keyIdExt='2359_8', @name='Holder 3 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_9', Name='Holder 4 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=21, @deviceId=13, @keyIdExt='2359_9', @name='Holder 4 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeyStates Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [INFO] Przetworzono 23 stanów kluczy.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_10', Name='Holder 5 - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=22, @deviceId=13, @keyIdExt='2359_10', @name='Holder 5 - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_11', Name='2359-1-011.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=23, @deviceId=13, @keyIdExt='2359_11', @name='2359-1-011.Key'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_12', Name='Klucz w skrytce - nowy', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=24, @deviceId=13, @keyIdExt='2359_12', @name='Klucz w skrytce - nowy'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_13', Name='Skrytka lewa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=25, @deviceId=13, @keyIdExt='2359_13', @name='Skrytka lewa - stary'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_14', Name='Skrytka prawa - stary', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:54 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:54 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=26, @deviceId=13, @keyIdExt='2359_14', @name='Skrytka prawa - stary'.
+2025-10-16 14:28:55 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:55 | [DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='2359_15', Name='2359-1-010.Key', Gid='2359', DeviceId z API='1'.
+2025-10-16 14:28:55 | [DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='2359'...
+2025-10-16 14:28:55 | [DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: 13.
+2025-10-16 14:28:55 | [DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId=27, @deviceId=13, @keyIdExt='2359_15', @name='2359-1-010.Key'.
+2025-10-16 14:28:55 | [DEBUG] InsertKeys Procedura wykonana pomyślnie.
+2025-10-16 14:28:55 | [DEBUG] InsertKeys Zakończono przetwarzanie kluczy.
+2025-10-16 14:28:55 | [INFO] Przetworzono 27 kluczy.
+2025-10-16 14:29:24 | HTTP POST /persons -> Conflict
+2025-10-16 14:29:24 | Response body: Person with owner_id_api '2076' already exists.
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla user ID=2076.
+2025-10-16 14:29:24 | HTTP POST /persons -> BadRequest
+2025-10-16 14:29:24 | Response body: Keys not found for keyIdExt: 3433_0
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:29:24 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:29:24 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-f66e4891da842d94ffe1905d07570ebb-a51d4eda274c4bee-00"}
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:29:24 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:29:24 | Response body: Person not found.
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla keyuser ID=3433_0.
+2025-10-16 14:29:24 | HTTP PUT /persons/2079 -> NotFound
+2025-10-16 14:29:24 | Response body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-5dfea219b21993b29752b3e0dd23974d-ba5cc0fd2b977eb1-00"}
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla user ID=2079.
+2025-10-16 14:29:24 | HTTP POST /persons/2079/keys -> NotFound
+2025-10-16 14:29:24 | Response body: Person not found.
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla keyuser ID=2359_14.
+2025-10-16 14:29:24 | HTTP POST /reservations -> NotFound
+2025-10-16 14:29:24 | Response body: Person not found.
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla reservation ID=24.
+2025-10-16 14:29:24 | HTTP POST /persons/2080/credentials -> Conflict
+2025-10-16 14:29:24 | Response body: This credential already exists for the person.
+2025-10-16 14:29:24 | [ERROR] Nie udało się wysłać danych dla credential ID=35960949.
+2025-10-16 14:29:24 | [WARN] Brak mapowania dla Object_Type: 'keygroupuser'
+2025-10-16 14:29:24 | [WARN] Nie znaleziono osoby o idautoid=2052 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:29:24 | [WARN] Brak danych dla user ID=2052. Audyt mógł być przestarzały.
+2025-10-16 14:29:24 | [WARN] Nie znaleziono osoby o idautoid=2062 lub nie spełnia ona kryteriów procedury.
+2025-10-16 14:29:24 | [WARN] Brak danych dla user ID=2062. Audyt mógł być przestarzały.

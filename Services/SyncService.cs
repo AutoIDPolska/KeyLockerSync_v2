@@ -45,12 +45,7 @@ namespace KeyLockerSync.Services
                     GetDataFunc = (dbh, objectId) => dbh.GetKeyDataAsync(objectId),
                     SendDataFunc = (apisvc, obj, method) => apisvc.UpdateKeyNameAsync(obj, method)
                 },
-                /*
-                ["KEYUSER"] = new ActionMapping
-                {
-                    GetDataFunc = (dbh, objectId) => dbh.GetKeyUserDataAsync(objectId),
-                    SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignKeyAsync(obj, method)
-                }*/
+                
                 ["KEYUSER"] = new ActionMapping
                 {
                     //GetDataFunc = (dbh, objectId) => dbh.GetKeyUserDataAsync(objectId),
