@@ -66,10 +66,10 @@ namespace KeyLockerSync.Data
             {
                 if (string.IsNullOrEmpty(device.Gid))
                 {
-                    Console.WriteLine($"[WARN] Otrzymano urządzenie z pustym Gid. Pomijam rekord.");
+                    Console.WriteLine($"[WARN] InsertOrUpdateDevices Otrzymano urządzenie z pustym Gid. Pomijam rekord.");
                     continue;
                 }
-                Console.WriteLine($"[DEBUG] Przetwarzam urządzenie: GID='{device.Gid}', Name='{device.Name}', Status='{device.Status}'");
+                Console.WriteLine($"[DEBUG] InsertOrUpdateDevices Przetwarzam urządzenie: GID='{device.Gid}', Name='{device.Name}', Status='{device.Status}'");
 
 
                 using var cmd = new SqlCommand("keyLocker_device_get", conn)
@@ -96,7 +96,7 @@ namespace KeyLockerSync.Data
 
             foreach (var key in keys)
             {
-                Console.WriteLine($"\n[DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='{key.KeyIdExt}', Name='{key.Name}', Gid='{key.Gid}', DeviceId z API='{key.DeviceId}'.");
+                Console.WriteLine($"[DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='{key.KeyIdExt}', Name='{key.Name}', Gid='{key.Gid}', DeviceId z API='{key.DeviceId}'.");
 
                 int? localDeviceId = null;
                 if (!string.IsNullOrEmpty(key.Gid))
@@ -186,10 +186,11 @@ namespace KeyLockerSync.Data
                     cmd.Parameters.AddWithValue("@updatedAt", (object)state.UpdatedAt ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@ownerIdExt", DBNull.Value);
                     await cmd.ExecuteNonQueryAsync();
+                    Console.WriteLine("[DEBUG] InsertKeyStates Procedura wykonana pomyślnie.");
                 }
                 else
                 {
-                    Console.WriteLine($"[WARN] Pomijam stan dla klucza '{state.KeyIdExt}', ponieważ urządzenie nadrzędne (Gid={state.Gid}) nie zostało jeszcze zsynchronizowane.");
+                    Console.WriteLine($"[WARN] InsertKeyStates Pomijam stan dla klucza '{state.KeyIdExt}', ponieważ urządzenie nadrzędne (Gid={state.Gid}) nie zostało jeszcze zsynchronizowane.");
                 }
             }
         }
@@ -207,7 +208,7 @@ namespace KeyLockerSync.Data
             }
             else
             {
-                Console.WriteLine($"[ERROR] Nieprawidłowy format groupIdApi: '{groupIdApi}'. Oczekiwano liczby.");
+                Console.WriteLine($"[ERROR] GetKeyGroupData Nieprawidłowy format groupIdApi: '{groupIdApi}'. Oczekiwano liczby.");
                 return null;
             }
 
@@ -228,64 +229,69 @@ namespace KeyLockerSync.Data
 
         public async Task<object> GetPersonDataAsync(string idautoid)
         {
+            if (!int.TryParse(idautoid, out int personId))
+            {
+                Console.WriteLine($"[ERROR] Nieprawidłowy format idautoid: '{idautoid}'. Oczekiwano liczby.");
+                return null;
+            }
+
+            Person person = null;
             using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
 
-            Person person = null;
-
-            // Krok 1: Pobierz podstawowe dane osoby
             using (var cmd = new SqlCommand("keyLocker_person_postput", conn) { CommandType = CommandType.StoredProcedure })
             {
-                if (int.TryParse(idautoid, out int id))
-                {
-                    cmd.Parameters.AddWithValue("@idautoid", id);
-                }
-                else
-                {
-                    Console.WriteLine($"[ERROR] Nieprawidłowy format idautoid: '{idautoid}'. Oczekiwano liczby.");
-                    return null;
-                }
-
+                cmd.Parameters.AddWithValue("@idautoid", personId);
                 using var reader = await cmd.ExecuteReaderAsync();
                 if (await reader.ReadAsync())
                 {
                     person = new Person
                     {
-                        FirstName = reader["firstName"]?.ToString(),
-                        LastName = reader["lastName"]?.ToString(),
-                        OwnerIdApi = reader["ownerIdApi"].ToString()
+                        FirstName = reader["FirstName"]?.ToString(),
+                        LastName = reader["LastName"]?.ToString(),
+                        OwnerIdApi = reader["OwnerIdApi"].ToString()
                     };
+
+                    string cards = reader["Card"]?.ToString();
+                    if (!string.IsNullOrEmpty(cards))
+                    {
+                        person.Cards.AddRange(cards.Split(',').Select(c => c.Trim('"')));
+                    }
+
+                    string pins = reader["PIN"]?.ToString();
+                    if (!string.IsNullOrEmpty(pins))
+                    {
+                        person.Pins.AddRange(pins.Split(',').Select(p => p.Trim('"')));
+                    }
+
+                    string keyIdExts = reader["KeyIdExt"]?.ToString();
+                    if (!string.IsNullOrEmpty(keyIdExts))
+                    {
+                        person.KeyIdExts.AddRange(keyIdExts.Split(',').Select(k => k.Trim('"')));
+                    }
                 }
             }
 
-            if (person == null) return null;
-
-            // Krok 2: Znajdź GID urządzenia powiązanego z tą osobą
-            // Zakładamy, że osoba może być przypisana do kluczy w jednym urządzeniu (jeden GID)
-            using (var gidCmd = new SqlCommand(@"
-                SELECT TOP 1 d.gid 
-                FROM dbo.keyLocker_key k
-                JOIN dbo.keyLocker_device d ON k.device_id = d.id
-                JOIN unisuser.tAID_KeyUsers ku ON ku.key_id = k.id
-                WHERE ku.idautoid = @idautoid", conn))
+            if (person == null)
             {
-                gidCmd.Parameters.AddWithValue("@idautoid", int.Parse(idautoid));
-                var gid = await gidCmd.ExecuteScalarAsync();
-                if (gid != null && gid != DBNull.Value)
+                Console.WriteLine($"[WARN] Nie znaleziono osoby o idautoid={personId} lub nie spełnia ona kryteriów procedury.");
+                return null;
+            }
+
+            // Znajdź GID na podstawie pierwszego klucza, jeśli istnieje
+            if (person.KeyIdExts.Any())
+            {
+                string gidQuery = "SELECT TOP 1 gid FROM dbo.keyLocker_key WHERE device_key_id = @keyIdExt";
+                using (var gidCmd = new SqlCommand(gidQuery, conn))
                 {
-                    person.Gid = gid.ToString();
-                }
-                else
-                {
-                    // Jeśli nie znajdziemy GID, nie możemy wysłać danych do API
-                    Console.WriteLine($"[WARN] Nie znaleziono GID dla osoby z OwnerIdApi={person.OwnerIdApi}. Pomijam rekord.");
-                    return null;
+                    gidCmd.Parameters.AddWithValue("@keyIdExt", person.KeyIdExts.First());
+                    var gid = await gidCmd.ExecuteScalarAsync();
+                    person.Gid = gid?.ToString();
                 }
             }
 
             return person;
         }
-
         /// <summary>
         /// Pobiera dane klucza (ID i nazwę) na potrzeby audytu aktualizacji.
         /// </summary>
@@ -303,7 +309,7 @@ namespace KeyLockerSync.Data
             }
             else
             {
-                Console.WriteLine($"[ERROR] Nieprawidłowy format keyId w audycie: '{keyId}'. Oczekiwano liczby.");
+                Console.WriteLine($"[ERROR] GetKeyData Nieprawidłowy format keyId w audycie: '{keyId}'. Oczekiwano liczby.");
                 return null;
             }
 
@@ -362,6 +368,71 @@ namespace KeyLockerSync.Data
         }
 
         */
+
+        /// <summary>
+        /// Pobiera dane rezerwacji na podstawie jej ID z audytu.
+        /// </summary>
+        public async Task<object> GetReservationDataAsync(string reservationId)
+        {
+            if (!int.TryParse(reservationId, out int id))
+            {
+                Console.WriteLine($"[ERROR] Nieprawidłowy format ID dla rezerwacji: '{reservationId}'. Oczekiwano liczby.");
+                return null;
+            }
+
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+
+            using (var cmd = new SqlCommand("keyLocker_reservation_postput", conn) { CommandType = CommandType.StoredProcedure })
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                using var reader = await cmd.ExecuteReaderAsync();
+                if (await reader.ReadAsync())
+                {
+                    // Tworzymy obiekt Reservation, odczytując 'keyIdExt' bezpośrednio jako string.
+                    return new Reservation
+                    {
+                        ReservationId = id,
+                        Gid = reader["gid"].ToString(),
+                        OwnerIdApi = reader["ownerIdApi"].ToString(),
+                        KeyIdExt = reader["keyIdExt"].ToString(),
+                        ValidFrom = Convert.ToDateTime(reader["validFrom"]),
+                        ValidTo = Convert.ToDateTime(reader["validTo"])
+                    };
+                }
+            }
+
+            Console.WriteLine($"[WARN] Nie znaleziono danych dla rezerwacji o ID={id}.");
+            return null;
+        }
+
+        /// <summary>
+        /// Pobiera dane poświadczenia (dla operacji INSERT).
+        /// </summary>
+        public async Task<object> GetCredentialDataAsync(string credential)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("keyLocker_credential_postput", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            cmd.Parameters.AddWithValue("@creditional", credential);
+
+            await conn.OpenAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new CredentialData
+                {
+                    OwnerIdApi = reader["Idautoid"].ToString(),
+                    Credential = reader["C_CardNum"].ToString(),
+                    Method = reader["Method"].ToString()
+                };
+            }
+            Console.WriteLine($"[WARN] GetCredentialData Procedura 'keyLocker_credential_postput' nie zwróciła danych dla credential='{credential}'.");
+            return null;
+        }
+
         public void MarkAuditProcessed(int id)
         {
             using var conn = new SqlConnection(_connectionString);

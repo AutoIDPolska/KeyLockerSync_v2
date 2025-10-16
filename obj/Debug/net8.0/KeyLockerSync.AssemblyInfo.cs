@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KeyLockerSync")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+852fc8c5eecf81dfed1d14f8a0f9986a896b1c91")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7abd03bbcc51dd19978a20d96c5cf90e53775787")]
 [assembly: System.Reflection.AssemblyProductAttribute("KeyLockerSync")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KeyLockerSync")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

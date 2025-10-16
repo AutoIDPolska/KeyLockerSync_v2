@@ -8,6 +8,7 @@ using System.Configuration;
 
 namespace KeyLockerSync.Services
 {
+
     public class SyncService
     {
         private readonly DatabaseHelper _db;
@@ -52,8 +53,21 @@ namespace KeyLockerSync.Services
                 }*/
                 ["KEYUSER"] = new ActionMapping
                 {
+                    //GetDataFunc = (dbh, objectId) => dbh.GetKeyUserDataAsync(objectId),
                     GetDataFunc = null, // Nie używamy już tej funkcji
                     SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignKeyAsync(obj, method)
+                },
+                
+                ["RESERVATION"] = new ActionMapping
+                {
+                    GetDataFunc = (dbh, objectId) => dbh.GetReservationDataAsync(objectId),
+                    SendDataFunc = (apisvc, obj, method) => apisvc.SendReservationAsync(obj, method)
+                },
+
+                ["CREDENTIAL"] = new ActionMapping
+                {
+                    GetDataFunc = null, // Obsługiwane ręcznie
+                    SendDataFunc = (apisvc, obj, method) => apisvc.SendCredentialAsync(obj, method)
                 }
 
             };
@@ -74,24 +88,42 @@ namespace KeyLockerSync.Services
                 object data = null;
                 try
                 {
-                    // *** KLUCZOWA ZMIANA: Specjalna obsługa dla KEYUSER ***
-                    if (audit.Object_Type?.ToUpper() == "KEYUSER")
+                    string objectTypeUpper = audit.Object_Type?.ToUpper();
+                    string actionTypeUpper = audit.Action_Type?.ToUpper();
+
+                    if (objectTypeUpper == "KEYUSER")
                     {
-                        // Tworzymy obiekt KeyUser bezpośrednio z danych audytu
-                        if (string.IsNullOrEmpty(audit.Additional_ID) || !int.TryParse(audit.Object_ID, out int keyId))
+                        if (string.IsNullOrEmpty(audit.Additional_ID) || string.IsNullOrEmpty(audit.Object_ID))
                         {
                             Console.WriteLine($"[ERROR] Nieprawidłowy format danych dla KeyUser w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'.");
-                            continue; // Pomiń ten wadliwy rekord
+                            continue;
                         }
                         data = new KeyUser
                         {
                             OwnerIdApi = audit.Additional_ID,
-                            KeyIds = new List<int> { keyId }
+                            // Object_ID jest teraz traktowany jako keyIdExt i umieszczany w liście
+                            KeyIdExts = new List<string> { audit.Object_ID }
                         };
+                    }
+                    else if (objectTypeUpper == "CREDENTIAL")
+                    {
+                        if (actionTypeUpper == "DELETE")
+                        {
+                            // Dla DELETE tworzymy obiekt bezpośrednio z audytu
+                            data = new CredentialData
+                            {
+                                Method = audit.Additional_ID, // method = Additional_ID
+                                Credential = audit.Object_ID   // credential = Object_ID
+                            };
+                        }
+                        else // Dla INSERT i UPDATE
+                        {
+                            // Dla INSERT pobieramy pełne dane z procedury
+                            data = await _db.GetCredentialDataAsync(audit.Object_ID);
+                        }
                     }
                     else
                     {
-                        // Standardowa ścieżka dla wszystkich innych typów obiektów
                         data = await mapping.GetDataFunc(_db, audit.Object_ID);
                     }
 
@@ -101,7 +133,7 @@ namespace KeyLockerSync.Services
                         continue;
                     }
 
-                    HttpMethod method = (audit.Action_Type?.ToUpper()) switch
+                    HttpMethod method = actionTypeUpper switch
                     {
                         "CREATE" => HttpMethod.Post,
                         "INSERT" => HttpMethod.Post,
@@ -130,3 +162,5 @@ namespace KeyLockerSync.Services
         }
     }
 }
+
+

@@ -2,6 +2,7 @@ using KeyLockerSync.Data;
 using KeyLockerSync.Services;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,36 +10,55 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        Console.WriteLine("Uruchamianie KeyLockerSync...");
+        // *** KLUCZOWA ZMIANA: Inicjalizacja logowania do pliku ***
+        string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+        var fileLogger = new FileLogger(logFilePath);
+        Console.SetOut(fileLogger); // Przekierowanie standardowego wyjścia konsoli
 
-        string connectionString = ConfigurationManager.ConnectionStrings["KeyLockerDB"]?.ConnectionString;
-        if (string.IsNullOrEmpty(connectionString))
+        try
         {
-            Console.WriteLine("Brak connectionString w app.config (KeyLockerDB).");
-            return;
+            Console.WriteLine("==================================================");
+            Console.WriteLine("Uruchamianie KeyLockerSync...");
+
+            string connectionString = ConfigurationManager.ConnectionStrings["KeyLockerDB"]?.ConnectionString;
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                Console.WriteLine("[FATAL] Brak connectionString w app.config (KeyLockerDB). Aplikacja zostanie zamknięta.");
+                return;
+            }
+
+            int auditInterval = GetIntervalFromConfig("SyncAuditIntervalSeconds", 30);
+            int devicesInterval = GetIntervalFromConfig("SyncDevicesIntervalSeconds", 60);
+            int keysInterval = GetIntervalFromConfig("SyncKeysIntervalSeconds", 70);
+            int keyStatesInterval = GetIntervalFromConfig("SyncKeyStatesIntervalSeconds", 80);
+
+            var dbHelper = new DatabaseHelper(connectionString);
+            var httpClient = new HttpClient();
+            var apiService = new ApiService(httpClient);
+            var syncService = new SyncService(dbHelper, apiService);
+
+            Console.WriteLine($"Synchronizacja audytu co: {auditInterval} sek.");
+            Console.WriteLine($"Synchronizacja urządzeń co: {devicesInterval} sek.");
+            Console.WriteLine($"Synchronizacja kluczy co: {keysInterval} sek.");
+            Console.WriteLine($"Synchronizacja stanów kluczy co: {keyStatesInterval} sek.\n");
+
+            Task auditSyncTask = AuditSyncLoopAsync(syncService, auditInterval);
+            Task devicesSyncTask = GetDevicesLoopAsync(apiService, dbHelper, devicesInterval);
+            Task keysSyncTask = GetKeysLoopAsync(apiService, dbHelper, keysInterval);
+            Task keyStatesSyncTask = GetKeyStatesLoopAsync(apiService, dbHelper, keyStatesInterval);
+
+            await Task.WhenAll(auditSyncTask, devicesSyncTask, keysSyncTask, keyStatesSyncTask);
         }
-
-        int auditInterval = GetIntervalFromConfig("SyncAuditIntervalSeconds", 30);
-        int devicesInterval = GetIntervalFromConfig("SyncDevicesIntervalSeconds", 60);
-        int keysInterval = GetIntervalFromConfig("SyncKeysIntervalSeconds", 70);
-        int keyStatesInterval = GetIntervalFromConfig("SyncKeyStatesIntervalSeconds", 80);
-
-        var dbHelper = new DatabaseHelper(connectionString);
-        var httpClient = new HttpClient();
-        var apiService = new ApiService(httpClient);
-        var syncService = new SyncService(dbHelper, apiService);
-
-        Console.WriteLine($"Synchronizacja audytu co: {auditInterval} sek.");
-        Console.WriteLine($"Synchronizacja urządzeń co: {devicesInterval} sek.");
-        Console.WriteLine($"Synchronizacja kluczy co: {keysInterval} sek.");
-        Console.WriteLine($"Synchronizacja stanów kluczy co: {keyStatesInterval} sek.\n");
-
-        Task auditSyncTask = AuditSyncLoopAsync(syncService, auditInterval);
-        Task devicesSyncTask = GetDevicesLoopAsync(apiService, dbHelper, devicesInterval);
-        Task keysSyncTask = GetKeysLoopAsync(apiService, dbHelper, keysInterval);
-        Task keyStatesSyncTask = GetKeyStatesLoopAsync(apiService, dbHelper, keyStatesInterval);
-
-        await Task.WhenAll(auditSyncTask, devicesSyncTask, keysSyncTask, keyStatesSyncTask);
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FATAL] Wystąpił nieobsługiwany błąd w głównej metodzie: {ex.Message}");
+            Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            // Upewniamy się, że plik logów jest zawsze poprawnie zamykany
+            fileLogger?.Close();
+        }
     }
 
     static int GetIntervalFromConfig(string key, int defaultValue)
@@ -50,7 +70,7 @@ class Program
         Console.WriteLine($"Niepoprawny format klucza '{key}' w app.config. Ustawiono wartość domyślną: {defaultValue} sek.");
         return defaultValue;
     }
-
+    
     static async Task AuditSyncLoopAsync(SyncService syncService, int intervalSeconds)
     {
         while (true)
@@ -66,7 +86,7 @@ class Program
             await Task.Delay(TimeSpan.FromSeconds(intervalSeconds));
         }
     }
-
+    
     static async Task GetDevicesLoopAsync(ApiService apiService, DatabaseHelper dbHelper, int intervalSeconds)
     {
         while (true)
