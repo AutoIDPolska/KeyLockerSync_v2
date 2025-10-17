@@ -52,7 +52,19 @@ namespace KeyLockerSync.Services
                     GetDataFunc = null, // Nie używamy już tej funkcji
                     SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignKeyAsync(obj, method)
                 },
+
+                ["KEYGROUPKEY"] = new ActionMapping
+                {
+                    GetDataFunc = null, // Data comes directly from the audit record.
+                    SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignKeyInGroupAsync(obj, method)
+                },
                 
+                ["KEYGROUPUSER"] = new ActionMapping
+                {
+                    GetDataFunc = null, // Data is built directly from the audit record.
+                    SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignPersonInGroupAsync(obj, method)
+                },
+
                 ["RESERVATION"] = new ActionMapping
                 {
                     GetDataFunc = (dbh, objectId) => dbh.GetReservationDataAsync(objectId),
@@ -86,7 +98,37 @@ namespace KeyLockerSync.Services
                     string objectTypeUpper = audit.Object_Type?.ToUpper();
                     string actionTypeUpper = audit.Action_Type?.ToUpper();
 
-                    if (objectTypeUpper == "KEYUSER")
+                    if (objectTypeUpper == "KEYGROUPKEY")
+                    {
+                        // For this type, Object_ID is the groupIdApi and Additional_ID is the keyIdExt.
+                        if (string.IsNullOrEmpty(audit.Object_ID) || string.IsNullOrEmpty(audit.Additional_ID))
+                        {
+                            Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupKey w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'.");
+                            continue;
+                        }
+                        data = new KeyGroupKey
+                        {
+                            GroupIdApi = audit.Object_ID,
+                            KeyIdExts = new List<string> { audit.Additional_ID } // Create a list with the single key
+                        };
+                    }
+
+                    else if (objectTypeUpper == "KEYGROUPUSER")
+                    {
+                        // For this type, Object_ID is the groupIdApi and Additional_ID is the ownerIdApi.
+                        if (string.IsNullOrEmpty(audit.Object_ID) || string.IsNullOrEmpty(audit.Additional_ID))
+                        {
+                            Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupUser w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'.");
+                            continue;
+                        }
+                        data = new KeyGroupUser
+                        {
+                            GroupIdApi = audit.Object_ID,
+                            OwnerIdApis = new List<string> { audit.Additional_ID } // Create a list with the single person ID
+                        };
+                    }
+
+                    else if (objectTypeUpper == "KEYUSER")
                     {
                         if (string.IsNullOrEmpty(audit.Additional_ID) || string.IsNullOrEmpty(audit.Object_ID))
                         {
@@ -125,6 +167,7 @@ namespace KeyLockerSync.Services
                     if (data == null)
                     {
                         Console.WriteLine($"[WARN] Brak danych dla {audit.Object_Type} ID={audit.Object_ID}. Audyt mógł być przestarzały.");
+                        _db.MarkAuditAsWarning(audit.ID);
                         continue;
                     }
 
@@ -146,12 +189,14 @@ namespace KeyLockerSync.Services
                     }
                     else
                     {
-                        Console.WriteLine($"[ERROR] Nie udało się wysłać danych dla {audit.Object_Type} ID={audit.Object_ID}.");
+                        _db.MarkAuditAsWarning(audit.ID);
+                        Console.WriteLine($"[ERROR] Nie udało się wysłać danych dla Object_Type: {audit.Object_Type}, Object_ID={audit.Object_ID}, Akcja={audit.Action_Type}.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[ERROR] Krytyczny błąd synchronizacji dla {audit.Object_Type} ID={audit.Object_ID}: {ex.Message}");
+                    Console.WriteLine($"[ERROR] Krytyczny błąd synchronizacji dla Object_Type: {audit.Object_Type}, Object_ID={audit.Object_ID}: {ex.Message}");
+                    _db.MarkAuditAsWarning(audit.ID);
                 }
             }
         }

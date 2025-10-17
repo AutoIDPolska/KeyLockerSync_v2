@@ -15,13 +15,12 @@ namespace KeyLockerSync.Services
     public class ApiService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _baseUrl; //  bazowy adres API
+        private readonly string _baseUrl; 
 
         public ApiService(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
-            // BaseAddress z app.config
             string apiUrl = ConfigurationManager.AppSettings["ApiUrl"];
             if (string.IsNullOrEmpty(apiUrl))
                 throw new Exception("Brak ustawienia ApiUrl w app.config");
@@ -276,7 +275,7 @@ namespace KeyLockerSync.Services
                 if (string.IsNullOrEmpty(keyGroup.Gid))
                 {
                     Console.WriteLine($"[WARN] Pomijam operację {method} dla grupy '{keyGroup.Name}' (GroupIdApi={keyGroup.GroupIdApi}), ponieważ GID jest wymagany, a procedura zwróciła NULL.");
-                    return true;
+                    return false;   // *** ZMIANA: Zwracamy 'false', aby oznaczyć audyt statusem '2' ***
                 }
 
                 var payload = new
@@ -311,6 +310,10 @@ namespace KeyLockerSync.Services
             }
         }
 
+        
+        // Tworzy (POST) lub aktualizuje (PUT) dane osoby w API.
+        // Implementuje logikę "UPSERT" oraz mechanizm ponawiania próby utworzenia użytkownika bez kluczy.
+        
         public async Task<bool> SendPersonAsync(object obj, HttpMethod method)
         {
             if (obj is not Person person)
@@ -319,71 +322,109 @@ namespace KeyLockerSync.Services
                 return false;
             }
 
-            string url = (method == HttpMethod.Delete || method == HttpMethod.Put)
-                ? $"/persons/{person.OwnerIdApi}"
-                : "/persons";
-
-            var request = new HttpRequestMessage(method, url);
-
-            if (method == HttpMethod.Post)
+            var initialPayload = new
             {
-                var insertPayload = new
+                gid = person.Gid,
+                ownerIdApi = person.OwnerIdApi,
+                firstName = person.FirstName,
+                lastName = person.LastName,
+                credentials = new
                 {
-                    gid = person.Gid,
-                    ownerIdApi = person.OwnerIdApi,
-                    firstName = person.FirstName,
-                    lastName = person.LastName,
-                    credentials = new
-                    {
-                        pin = person.Pins,
-                        card = person.Cards,
-                        temporary = new string[] { }
-                    },
-                    keyIdExts = person.KeyIdExts
-                };
-                request.Content = JsonContent.Create(insertPayload);
-            }
-            else if (method == HttpMethod.Put)
+                    pin = person.Pins,
+                    card = person.Cards,
+                    temporary = new string[] { }
+                },
+                keyIdExts = person.KeyIdExts
+            };
+
+            // Najpierw próbujemy zaktualizować (PUT)
+            string url = $"/persons/{person.OwnerIdApi}";
+            var request = new HttpRequestMessage(HttpMethod.Put, url)
             {
-                var updatePayload = new
-                {
-                    gid = person.Gid,
-                    ownerIdApi = person.OwnerIdApi,
-                    firstName = person.FirstName,
-                    lastName = person.LastName,
-                    credentials = new
-                    {
-                        pin = person.Pins,
-                        card = person.Cards,
-                        temporary = new string[] { }
-                    },
-                    keyIdExts = person.KeyIdExts
-                };
-                request.Content = JsonContent.Create(updatePayload);
-            }
+                Content = JsonContent.Create(initialPayload)
+            };
 
             try
             {
+                Console.WriteLine($"[INFO] Próbuję zaktualizować (PUT) osobę: {person.OwnerIdApi}");
                 var response = await _httpClient.SendAsync(request);
-                Console.WriteLine($"HTTP {method} {url} -> {response.StatusCode}");
+                Console.WriteLine($"HTTP PUT {url} -> {response.StatusCode}");
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    Console.WriteLine($"[INFO] Osoba {person.OwnerIdApi} nie istnieje. Próbuję ją utworzyć (POST)...");
+
+                    url = "/persons";
+                    request = new HttpRequestMessage(HttpMethod.Post, url)
+                    {
+                        Content = JsonContent.Create(initialPayload)
+                    };
+
+                    response = await _httpClient.SendAsync(request);
+                    Console.WriteLine($"HTTP POST {url} -> {response.StatusCode}");
+
+                    // *** KLUCZOWA ZMIANA: Obsługa błędu "Keys not found" ***
+                    if (!response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        if (errorContent.Contains("Keys not found"))
+                        {
+                            Console.WriteLine("[WARN] API odrzuciło żądanie z powodu nieistniejących kluczy. Ponawiam próbę, tworząc użytkownika bez przypisania kluczy.");
+
+                            // Tworzymy nowy payload z pustą listą kluczy
+                            var fallbackPayload = new
+                            {
+                                gid = person.Gid,
+                                ownerIdApi = person.OwnerIdApi,
+                                firstName = person.FirstName,
+                                lastName = person.LastName,
+                                credentials = new
+                                {
+                                    pin = person.Pins,
+                                    card = person.Cards,
+                                    temporary = new string[] { }
+                                },
+                                keyIdExts = new string[] { } // Pusta lista kluczy
+                            };
+
+                            request = new HttpRequestMessage(HttpMethod.Post, "/persons")
+                            {
+                                Content = JsonContent.Create(fallbackPayload)
+                            };
+
+                            response = await _httpClient.SendAsync(request);
+                            Console.WriteLine($"HTTP POST (ponowienie bez kluczy) /persons -> {response.StatusCode}");
+                        }
+                    }
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine($"Response body (po POST): {content}");
+                    }
+                    return response.IsSuccessStatusCode;
+                }
+                else
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Response body: {content}");
+                    Console.WriteLine($"Response body (po PUT): {content}");
+                    return false;
                 }
-                return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] Błąd wysyłki {method} dla osoby {person.OwnerIdApi}: {ex.Message}");
+                Console.WriteLine($"[ERROR] Krytyczny błąd podczas operacji na osobie {person.OwnerIdApi}: {ex.Message}");
                 return false;
             }
         }
 
-        
         // Przypisuje (POST) lub odbiera (DELETE) klucze osobie, używając keyIdExts.
-        
+
         public async Task<bool> AssignOrUnassignKeyAsync(object obj, HttpMethod method)
         {
             if (obj is not KeyUser keyUser)
@@ -418,9 +459,80 @@ namespace KeyLockerSync.Services
             }
         }
 
+        // Adds (POST) or removes (DELETE) a key from a key group.
         
+        public async Task<bool> AssignOrUnassignKeyInGroupAsync(object obj, HttpMethod method)
+        {
+            if (obj is not KeyGroupKey keyGroupKey)
+                return false;
+
+            // The URL is constructed using the GroupIdApi.
+            string url = $"/groups/{keyGroupKey.GroupIdApi}/keys";
+
+            // The payload is the same for both POST and DELETE requests.
+            var payload = new { keyIdExts = keyGroupKey.KeyIdExts };
+            var request = new HttpRequestMessage(method, url)
+            {
+                Content = JsonContent.Create(payload)
+            };
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                Console.WriteLine($"HTTP {method} {url} -> {response.StatusCode}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Response body: {content}");
+                }
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd wysyłki {method} dla KeyGroupKey (grupa: {keyGroupKey.GroupIdApi}): {ex.Message}");
+                return false;
+            }
+        }
+
+        // Adds (POST) or removes (DELETE) a person from a key group.
+        
+        public async Task<bool> AssignOrUnassignPersonInGroupAsync(object obj, HttpMethod method)
+        {
+            if (obj is not KeyGroupUser keyGroupUser)
+                return false;
+
+            // The URL is constructed using the GroupIdApi.
+            string url = $"/groups/{keyGroupUser.GroupIdApi}/persons";
+
+            // The payload is the same for both POST and DELETE requests.
+            var payload = new { ownerIdApis = keyGroupUser.OwnerIdApis };
+            var request = new HttpRequestMessage(method, url)
+            {
+                Content = JsonContent.Create(payload)
+            };
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                Console.WriteLine($"HTTP {method} {url} -> {response.StatusCode}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Response body: {content}");
+                }
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd wysyłki {method} dla KeyGroupUser (grupa: {keyGroupUser.GroupIdApi}): {ex.Message}");
+                return false;
+            }
+        }
+
         // Wysyła dane rezerwacji (POST, PUT, DELETE).
-       
+
         public async Task<bool> SendReservationAsync(object obj, HttpMethod method)
         {
             if (obj is not Reservation reservation)
@@ -492,13 +604,14 @@ namespace KeyLockerSync.Services
                 url = $"/persons/{credentialData.OwnerIdApi}/credentials";
             }
 
+            var payload = new
+            {
+                method = credentialData.Method,
+                credential = credentialData.Credential
+            };
             var request = new HttpRequestMessage(method, url)
             {
-                Content = JsonContent.Create(new
-                {
-                    method = credentialData.Method,
-                    credential = credentialData.Credential
-                })
+                Content = JsonContent.Create(payload)
             };
 
             try
@@ -508,8 +621,8 @@ namespace KeyLockerSync.Services
 
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
-                    Console.WriteLine($"[WARN] API zwróciło 404 (Not Found) dla osoby {credentialData.OwnerIdApi}. Audyt zostanie oznaczony jako przetworzony.");
-                    return true;
+                    Console.WriteLine($"[WARN] API zwróciło błąd 404 (Not Found). Audyt zostanie oznaczony jako przetworzony.");
+                    return true; // Zwracamy 'true', aby usunąć zadanie z kolejki.
                 }
 
                 if (!response.IsSuccessStatusCode)

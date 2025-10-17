@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace KeyLockerSync.Data
 {
@@ -295,7 +296,7 @@ namespace KeyLockerSync.Data
        
         // Pobiera dane klucza (ID i nazwę) na potrzeby audytu aktualizacji.
        
-        public async Task<object> GetKeyDataAsync(string keyId)
+        public async Task<object> GetKeyDataAsync(string objectId)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("keyLocker_key_postput", conn)
@@ -303,15 +304,13 @@ namespace KeyLockerSync.Data
                 CommandType = CommandType.StoredProcedure
             };
 
-            if (int.TryParse(keyId, out int id))
+            if (string.IsNullOrEmpty(objectId))
             {
-                cmd.Parameters.AddWithValue("@keyid", id);
-            }
-            else
-            {
-                Console.WriteLine($"[ERROR] GetKeyData Nieprawidłowy format keyId w audycie: '{keyId}'. Oczekiwano liczby.");
+                Console.WriteLine($"[ERROR] Pusty Object_ID w audycie dla typu 'key'.");
                 return null;
             }
+
+            cmd.Parameters.AddWithValue("@keyIdExt", objectId);
 
             await conn.OpenAsync();
             using var reader = await cmd.ExecuteReaderAsync();
@@ -324,6 +323,7 @@ namespace KeyLockerSync.Data
                     Name = reader["name"].ToString()
                 };
             }
+            Console.WriteLine($"[WARN] Procedura 'keyLocker_key_postput' nie zwróciła danych dla klucza o identyfikatorze: '{objectId}'.");
             return null;
         }
         
@@ -393,7 +393,21 @@ namespace KeyLockerSync.Data
         public void MarkAuditProcessed(int id)
         {
             using var conn = new SqlConnection(_connectionString);
+
+            Console.WriteLine($"[DB] Oznaczam audyt ID={id} jako pomyślnie przetworzony (Status=1).");
             using var cmd = new SqlCommand("UPDATE keylocker_audit SET Status='1', Date_Processed=GETDATE() WHERE ID=@id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            conn.Open();
+            cmd.ExecuteNonQuery();     
+        }
+        
+        // Oznacza rekord audytu jako przetworzony z błędem lub ostrzeżeniem.
+       
+        public void MarkAuditAsWarning(int id)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            Console.WriteLine($"[DB] Oznaczam audyt ID={id} jako przetworzony z ostrzeżeniem (Status=2).");
+            using var cmd = new SqlCommand("UPDATE keylocker_audit SET Status='2', Date_Processed=GETDATE() WHERE ID=@id", conn);
             cmd.Parameters.AddWithValue("@id", id);
             conn.Open();
             cmd.ExecuteNonQuery();
