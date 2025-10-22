@@ -11,6 +11,8 @@ namespace KeyLockerSync.Models
         public string OwnerIdApi { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime? AccessValidFrom { get; set; }
+        public DateTime? AccessValidTo { get; set; }
 
         // --- Pola pobierane z procedury, używane do budowania payloadów ---
         [JsonIgnore] // Ignorujemy te pola w domyślnej serializacji

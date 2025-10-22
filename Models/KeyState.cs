@@ -24,10 +24,10 @@ namespace KeyLockerSync.Models
         public string State { get; set; }
 
         [JsonPropertyName("personId")]
-        public string PersonId { get; set; }
+        public string? PersonId { get; set; }
 
         [JsonPropertyName("ownerIdApi")]
-        public string OwnerIdApi { get; set; }
+        public string? OwnerIdApi { get; set; }
 
         [JsonPropertyName("ts")]
         public DateTime Ts { get; set; }

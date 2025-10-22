@@ -18,7 +18,7 @@ class Program
         try
         {
             Console.WriteLine("==================================================");
-            Console.WriteLine("Uruchamianie KeyLockerSync...");
+            Console.WriteLine("Uruchamianie KeyLockerSync_pz...");
 
             string connectionString = ConfigurationManager.ConnectionStrings["KeyLockerDB"]?.ConnectionString;
             if (string.IsNullOrEmpty(connectionString))

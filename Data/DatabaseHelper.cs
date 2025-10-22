@@ -18,9 +18,20 @@ namespace KeyLockerSync.Data
 
         public List<AuditRecord> GetPendingAuditRecords()
         {
+            string query = "SELECT TOP 1000 ID, Object_ID, Additional_ID, Object_Type, Action_Type, Date_Added, Date_Processed, Status, ISNULL(RetryCount, 0) AS RetryCount FROM keylocker_audit WHERE Status='0'";
+            return GetAuditRecordsByQuery(query);
+        }
+
+        public List<AuditRecord> GetWarningAuditRecords()
+        {
+            string query = "SELECT TOP 1000 ID, Object_ID, Additional_ID, Object_Type, Action_Type, Date_Added, Date_Processed, Status, ISNULL(RetryCount, 0) AS RetryCount FROM keylocker_audit WHERE Status='2'";
+            return GetAuditRecordsByQuery(query);
+        }
+        
+        // Prywatna metoda pomocnicza do pobierania rekordów audytu
+        private List<AuditRecord> GetAuditRecordsByQuery(string query)
+        {
             var list = new List<AuditRecord>();
-           
-            string query = "SELECT TOP 1000 ID, Object_ID, Additional_ID, Object_Type, Action_Type, Date_Added, Date_Processed, Status FROM keylocker_audit WHERE Status='0'";
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, conn);
             conn.Open();
@@ -31,12 +42,13 @@ namespace KeyLockerSync.Data
                 {
                     ID = Convert.ToInt32(reader["ID"]),
                     Object_ID = reader["Object_ID"].ToString(),
-                    Additional_ID = reader["Additional_ID"]?.ToString(), 
+                    Additional_ID = reader["Additional_ID"]?.ToString(),
                     Object_Type = reader["Object_Type"].ToString(),
                     Action_Type = reader["Action_Type"].ToString(),
                     Date_Added = Convert.ToDateTime(reader["Date_Added"]),
                     Date_Processed = reader["Date_Processed"] as DateTime?,
                     Status = Convert.ToInt32(reader["Status"]),
+                    RetryCount = Convert.ToInt32(reader["RetryCount"])
                 });
             }
             return list;
@@ -97,12 +109,12 @@ namespace KeyLockerSync.Data
 
             foreach (var key in keys)
             {
-                Console.WriteLine($"[DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='{key.KeyIdExt}', Name='{key.Name}', Gid='{key.Gid}', DeviceId z API='{key.DeviceId}'.");
+                //Console.WriteLine($"[DEBUG] InsertKeys Przetwarzam klucz: KeyIdExt='{key.KeyIdExt}', Name='{key.Name}', Gid='{key.Gid}', DeviceId z API='{key.DeviceId}'.");
 
                 int? localDeviceId = null;
                 if (!string.IsNullOrEmpty(key.Gid))
                 {
-                    Console.WriteLine($"[DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='{key.Gid}'...");
+                    //Console.WriteLine($"[DEBUG] InsertKeys Próbuję znaleźć lokalne ID dla Gid='{key.Gid}'...");
                     using (var findCmd = new SqlCommand("SELECT id FROM dbo.keyLocker_device WHERE gid = @gid", conn))
                     {
                         findCmd.Parameters.AddWithValue("@gid", key.Gid);
@@ -110,11 +122,11 @@ namespace KeyLockerSync.Data
                         if (result != null && result != DBNull.Value)
                         {
                             localDeviceId = Convert.ToInt32(result);
-                            Console.WriteLine($"[DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: {localDeviceId}.");
+                            //Console.WriteLine($"[DEBUG] InsertKeys ZNALEZIONO lokalne ID urządzenia: {localDeviceId}.");
                         }
                         else
                         {
-                            Console.WriteLine($"[DEBUG] InsertKeys NIE ZNALEZIONO lokalnego ID urządzenia dla Gid='{key.Gid}'.");
+                            //Console.WriteLine($"[DEBUG] InsertKeys NIE ZNALEZIONO lokalnego ID urządzenia dla Gid='{key.Gid}'.");
                         }
                     }
                 }
@@ -125,7 +137,7 @@ namespace KeyLockerSync.Data
 
                 if (localDeviceId.HasValue)
                 {
-                    Console.WriteLine($"[DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId={key.KeyId}, @deviceId={localDeviceId.Value}, @keyIdExt='{key.KeyIdExt}', @name='{key.Name}'.");
+                    //Console.WriteLine($"[DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId={key.KeyId}, @deviceId={localDeviceId.Value}, @keyIdExt='{key.KeyIdExt}', @name='{key.Name}'.");
                     using var cmd = new SqlCommand("keyLocker_key_get", conn)
                     {
                         CommandType = CommandType.StoredProcedure
@@ -220,7 +232,7 @@ namespace KeyLockerSync.Data
                 return new KeyGroup
                 {
                     Gid = reader["gid"].ToString(),
-                    GroupIdApi = reader["groupIdApi"].ToString(), // Zwracamy jako string
+                    GroupIdApi = reader["groupIdApi"].ToString(),
                     Name = reader["name"].ToString(),
                     Description = "" 
                 };
@@ -250,7 +262,9 @@ namespace KeyLockerSync.Data
                     {
                         FirstName = reader["FirstName"]?.ToString(),
                         LastName = reader["LastName"]?.ToString(),
-                        OwnerIdApi = reader["OwnerIdApi"].ToString()
+                        OwnerIdApi = reader["OwnerIdApi"].ToString(),
+                        AccessValidFrom = reader["accessValidFrom"] != DBNull.Value ? (DateTime?)reader["accessValidFrom"] : null,
+                        AccessValidTo = reader["accessValidTo"] != DBNull.Value ? (DateTime?)reader["accessValidTo"] : null
                     };
 
                     string cards = reader["Card"]?.ToString();
@@ -407,10 +421,20 @@ namespace KeyLockerSync.Data
         {
             using var conn = new SqlConnection(_connectionString);
             Console.WriteLine($"[DB] Oznaczam audyt ID={id} jako przetworzony z ostrzeżeniem (Status=2).");
-            using var cmd = new SqlCommand("UPDATE keylocker_audit SET Status='2', Date_Processed=GETDATE() WHERE ID=@id", conn);
+            using var cmd = new SqlCommand("UPDATE keylocker_audit SET Status='2', Date_Processed=GETDATE(), RetryCount=ISNULL(RetryCount, 0) + 1 WHERE ID=@id", conn);
             cmd.Parameters.AddWithValue("@id", id);
             conn.Open();
             cmd.ExecuteNonQuery();
         }
+        public void MarkAuditAsFailed(int id)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            Console.WriteLine($"[DB] Oznaczam audyt ID={id} jako ostatecznie nieudany (Status=3).");
+            using var cmd = new SqlCommand("UPDATE keylocker_audit SET Status='3', Date_Processed=GETDATE() WHERE ID=@id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }

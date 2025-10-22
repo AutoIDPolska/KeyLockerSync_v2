@@ -10,5 +10,6 @@
         public DateTime Date_Added { get; set; }
         public DateTime? Date_Processed { get; set; }
         public int Status { get; set; }
+        public int RetryCount { get; set; }
     }
 }
