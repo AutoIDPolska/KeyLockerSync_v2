@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Net; // *** Added this using for HttpStatusCode ***
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -15,8 +16,7 @@ namespace KeyLockerSync.Services
     public class ApiService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _baseUrl; //  bazowy adres API
-
+        
         public ApiService(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
@@ -27,6 +27,20 @@ namespace KeyLockerSync.Services
                 throw new Exception("Brak ustawienia ApiUrl w app.config");
 
             _httpClient.BaseAddress = new Uri(apiUrl);
+
+            string apiKey = ConfigurationManager.AppSettings["ApiKey"];
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                Console.WriteLine("[WARN] Brak klucza 'ApiKey' w app.config. Żądania będą wysyłane bez autoryzacji.");
+            }
+            else
+            {
+                // Ustawiamy domyślny nagłówek Authorization dla wszystkich żądań
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+                Console.WriteLine("[INFO] Pomyślnie ustawiono nagłówek autoryzacji Bearer.");
+            }
+
+
         }
 
         public async Task<List<Device>> GetDevicesAsync(int? gid = null, string name = null, string status = null)
@@ -115,15 +129,8 @@ namespace KeyLockerSync.Services
             }
         }
 
-        // =================================================================================
-        // *** POCZĄTEK ZMIANY - DODANO BRAKUJĄCĄ METODĘ UpdateKeyNameAsync ***
-        // Ta metoda była wywoływana w SyncService, ale brakowało jej definicji,
-        // co powodowało błąd kompilacji "Element „ApiService” nie zawiera definicji „UpdateKeyNameAsync”".
-        // =================================================================================
-
-        /// <summary>
-        /// Aktualizuje nazwę klucza w API (dla Object_Type: key, Action_Type: update).
-        /// </summary>
+        
+        // Aktualizuje nazwę klucza w API (dla Object_Type: key, Action_Type: update)
         public async Task<bool> UpdateKeyNameAsync(object obj, HttpMethod method)
         {
             // Metoda obsługuje tylko operacje PUT dla obiektu Key
@@ -134,14 +141,10 @@ namespace KeyLockerSync.Services
 
             // Tworzymy payload z samą nazwą, zgodnie z wymaganiami API
             var payload = new { name = key.Name };
-            var request = new HttpRequestMessage(HttpMethod.Put, url)
-            {
-                Content = JsonContent.Create(payload)
-            };
-
+            
             try
             {
-                var response = await _httpClient.SendAsync(request);
+                var response = await _httpClient.PutAsJsonAsync(url, payload);
                 Console.WriteLine($"HTTP PUT {url} -> {response.StatusCode}");
 
                 if (!response.IsSuccessStatusCode)
@@ -157,10 +160,6 @@ namespace KeyLockerSync.Services
                 return false;
             }
         }
-
-        // =================================================================================
-        // *** KONIEC ZMIANY ***
-        // =================================================================================
 
 
         // Wysyłka obiektu Device (POST/PUT/DELETE)
@@ -322,9 +321,8 @@ namespace KeyLockerSync.Services
             }
         }
 
-        /// <summary>
-        /// Wysyła dane osoby do API (POST, PUT, DELETE).
-        /// </summary>
+        
+        // Wysyła dane osoby do API (POST, PUT, DELETE)        
         public async Task<bool> SendPersonAsync(object obj, HttpMethod method)
         {
             if (obj is not Person person)
@@ -336,7 +334,6 @@ namespace KeyLockerSync.Services
             string url;
             HttpRequestMessage request = null;
 
-            // *** KLUCZOWA ZMIANA: Poprawna obsługa różnych metod HTTP ***
             if (method == HttpMethod.Post)
             {
                 url = "/persons";
@@ -569,9 +566,7 @@ namespace KeyLockerSync.Services
             }
         }
 
-        /// <summary>
-        /// Dodaje (POST) lub usuwa (DELETE) klucz z grupy kluczy.
-        /// </summary>
+        // Dodaje (POST) lub usuwa (DELETE) klucz z grupy kluczy        
         public async Task<bool> AssignOrUnassignKeyInGroupAsync(object obj, HttpMethod method)
         {
             if (obj is not KeyGroupKey keyGroupKey)
@@ -604,9 +599,7 @@ namespace KeyLockerSync.Services
             }
         }
 
-        /// <summary>
-        /// Dodaje (POST) lub usuwa (DELETE) osobę z grupy kluczy.
-        /// </summary>
+        // Dodaje (POST) lub usuwa (DELETE) osobę z grupy kluczy.
         public async Task<bool> AssignOrUnassignPersonInGroupAsync(object obj, HttpMethod method)
         {
             if (obj is not KeyGroupUser keyGroupUser)
@@ -637,13 +630,6 @@ namespace KeyLockerSync.Services
                 Console.WriteLine($"[ERROR] Błąd wysyłki {method} dla KeyGroupUser (grupa: {keyGroupUser.GroupIdApi}): {ex.Message}");
                 return false;
             }
-        }
-
-        // Wygodna metoda do zmiany tylko Name
-        public async Task<bool> UpdateDeviceNameAsync(string gid, string newName)
-        {
-            var tempDevice = new Device { Gid = gid, Name = newName };
-            return await SendDeviceAsync(tempDevice, HttpMethod.Put);
         }
     }
 }

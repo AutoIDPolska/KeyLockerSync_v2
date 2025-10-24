@@ -9,7 +9,7 @@ namespace KeyLockerSync.Models
         public int KeyId { get; set; }
 
         [JsonPropertyName("deviceId")]
-        public int DeviceId { get; set; }
+        public int? DeviceId { get; set; }
 
         [JsonPropertyName("gid")]
         public string Gid { get; set; }
