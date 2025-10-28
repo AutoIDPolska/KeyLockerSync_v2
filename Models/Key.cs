@@ -11,6 +11,9 @@ namespace KeyLockerSync.Models
         [JsonPropertyName("deviceId")]
         public int? DeviceId { get; set; }
 
+        [JsonPropertyName("keyPlaceIdMap")]
+        public int? KeyPlaceIdMap { get; set; }
+
         [JsonPropertyName("gid")]
         public string Gid { get; set; }
 

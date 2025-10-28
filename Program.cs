@@ -31,6 +31,7 @@ class Program
             int devicesInterval = GetIntervalFromConfig("SyncDevicesIntervalSeconds", 60);
             int keysInterval = GetIntervalFromConfig("SyncKeysIntervalSeconds", 70);
             int keyStatesInterval = GetIntervalFromConfig("SyncKeyStatesIntervalSeconds", 80);
+            int keyPlacesInterval = GetIntervalFromConfig("SyncKeyPlacesIntervalSeconds", 90);
 
             var dbHelper = new DatabaseHelper(connectionString);
             var httpClient = new HttpClient();
@@ -41,11 +42,13 @@ class Program
             Console.WriteLine($"Synchronizacja urządzeń co: {devicesInterval} sek.");
             Console.WriteLine($"Synchronizacja kluczy co: {keysInterval} sek.");
             Console.WriteLine($"Synchronizacja stanów kluczy co: {keyStatesInterval} sek.\n");
+            Console.WriteLine($"Synchronizacja miejsc kluczy co: {keyPlacesInterval} sek.\n");
 
             Task auditSyncTask = AuditSyncLoopAsync(syncService, auditInterval);
             Task devicesSyncTask = GetDevicesLoopAsync(apiService, dbHelper, devicesInterval);
             Task keysSyncTask = GetKeysLoopAsync(apiService, dbHelper, keysInterval);
             Task keyStatesSyncTask = GetKeyStatesLoopAsync(apiService, dbHelper, keyStatesInterval);
+            Task keyPlacesSyncTask = GetKeyPlacesLoopAsync(apiService, dbHelper, keyPlacesInterval);
 
             await Task.WhenAll(auditSyncTask, devicesSyncTask, keysSyncTask, keyStatesSyncTask);
         }
@@ -151,4 +154,27 @@ class Program
             await Task.Delay(TimeSpan.FromSeconds(intervalSeconds));
         }
     }
+
+    static async Task GetKeyPlacesLoopAsync(ApiService apiService, DatabaseHelper dbHelper, int intervalSeconds)
+    {
+        while (true)
+        {
+            Console.WriteLine("\n--- Rozpoczynam cykl synchronizacji miejsc kluczy ---");
+            try
+            {
+                var keyPlaces = await apiService.GetKeyPlacesAsync();
+                if (keyPlaces != null)
+                {
+                    await dbHelper.InsertOrUpdateKeyPlacesAsync(keyPlaces);
+                    Console.WriteLine($"[INFO] Przetworzono {keyPlaces.Count} miejsc kluczy.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd pętli synchronizacji miejsc kluczy: {ex.Message}");
+            }
+            await Task.Delay(TimeSpan.FromSeconds(intervalSeconds));
+        }
+    }
+
 }

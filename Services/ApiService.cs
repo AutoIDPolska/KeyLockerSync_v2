@@ -161,6 +161,24 @@ namespace KeyLockerSync.Services
             }
         }
 
+        public async Task<List<KeyPlace>> GetKeyPlacesAsync()
+        {
+            Console.WriteLine("[INFO] Wykonuję GET /keys/places");
+            try
+            {
+                var response = await _httpClient.GetAsync("/keys/places");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                var places = JsonSerializer.Deserialize<List<KeyPlace>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                Console.WriteLine($"[INFO] GET /keys/places - Pobrano {places?.Count ?? 0} miejsc kluczy.");
+                return places;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd GET /keys/places: {ex.Message}");
+                return null;
+            }
+        }
 
         // Wysyłka obiektu Device (POST/PUT/DELETE)
         public async Task<bool> SendDeviceAsync(object obj, HttpMethod method)

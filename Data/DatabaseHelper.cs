@@ -144,6 +144,7 @@ namespace KeyLockerSync.Data
                     };
                     cmd.Parameters.AddWithValue("@keyId", key.KeyId);
                     cmd.Parameters.AddWithValue("@deviceId", localDeviceId.Value);
+                    cmd.Parameters.AddWithValue("@keyPlaceIdMap", (object)key.KeyPlaceIdMap ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@gid", (object)key.Gid ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@keyIdExt", key.KeyIdExt);
                     cmd.Parameters.AddWithValue("@serialNumberExt", (object)key.SerialNumberExt ?? DBNull.Value);
@@ -207,6 +208,57 @@ namespace KeyLockerSync.Data
                 }
             }
         }
+
+        public async Task InsertOrUpdateKeyPlacesAsync(List<KeyPlace> keyPlaces)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+            Console.WriteLine($"[DB] Rozpoczynam zapisywanie {keyPlaces.Count} miejsc kluczy...");
+
+            foreach (var place in keyPlaces)
+            {
+                // Attempt to convert deviceGid (string) from API to int for the procedure
+                if (!int.TryParse(place.DeviceGid, out int deviceGidAsInt))
+                {
+                    // If conversion fails, log a warning and skip this record
+                    Console.WriteLine($"[WARN] Nie można przekonwertować DeviceGid '{place.DeviceGid}' na liczbę dla PlaceId={place.PlaceId}. Pomijam rekord.");
+                    continue;
+                }
+
+                using var cmd = new SqlCommand("keyLocker_place_get", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                cmd.Parameters.AddWithValue("@placeId", place.PlaceId);
+                cmd.Parameters.AddWithValue("@deviceId", place.DeviceId);
+                cmd.Parameters.AddWithValue("@deviceGid", deviceGidAsInt); // Pass the converted int
+                cmd.Parameters.AddWithValue("@gid", (object)place.Gid ?? DBNull.Value); // API returns int, procedure expects int?
+                cmd.Parameters.AddWithValue("@block", (object)place.Block ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@keyplace", (object)place.Keyplace ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@sensorState", (object)place.SensorState ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@fixedKeyFlag", (object)place.FixedKeyFlag ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@errorId", (object)place.ErrorId ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@errorMsg", (object)place.ErrorMsg ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@keyId", (object)place.KeyId ?? DBNull.Value); // keyId from API is int?
+                cmd.Parameters.AddWithValue("@keyIdExt", (object)place.KeyIdExt ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@createdAt", (object)place.CreatedAt ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@updatedAt", (object)place.UpdatedAt ?? DBNull.Value);
+
+                try
+                {
+                    await cmd.ExecuteNonQueryAsync();
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"[ERROR] Błąd SQL podczas zapisu PlaceId={place.PlaceId}: {ex.Message}");
+                    // Log more details if needed, e.g., parameter values
+                }
+            }
+            Console.WriteLine($"[DB] Zakończono zapisywanie miejsc kluczy.");
+        }
+
+
         public async Task<object> GetKeyGroupDataAsync(string groupIdApi)
         {
             using var conn = new SqlConnection(_connectionString);
