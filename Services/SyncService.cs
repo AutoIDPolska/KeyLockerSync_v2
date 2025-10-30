@@ -2,9 +2,10 @@
 using KeyLockerSync.Models;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Configuration;
+using System.Net.Http;
+using System.Runtime.Intrinsics.X86;
+using System.Threading.Tasks;
 
 namespace KeyLockerSync.Services
 {
@@ -137,6 +138,20 @@ namespace KeyLockerSync.Services
                     }
                     else if (objectTypeUpper == "KEYGROUPKEY")
                     {
+                        if (string.IsNullOrEmpty(audit.Object_ID) || string.IsNullOrEmpty(audit.Additional_ID))
+                        {
+                            Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupKey w audycie: Object_ID(keyIdExt)='{audit.Object_ID}', Additional_ID(groupIdApi)='{audit.Additional_ID}'.");
+                            _db.MarkAuditAsWarning(audit.ID);
+                            continue;
+                        }
+                        data = new KeyGroupKey
+                        {
+                            GroupIdApi = audit.Additional_ID,
+                            KeyIdExts = new List<string> { audit.Object_ID }
+                        };
+                        skipDataFetch = true;
+                    }
+                    /*{
                         if (string.IsNullOrEmpty(audit.Object_ID) || string.IsNullOrEmpty(audit.Additional_ID)) { Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupKey w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'."); continue; }
                         data = new KeyGroupKey { GroupIdApi = audit.Object_ID, KeyIdExts = new List<string> { audit.Additional_ID } };
                         skipDataFetch = true;
@@ -145,6 +160,21 @@ namespace KeyLockerSync.Services
                     {
                         if (string.IsNullOrEmpty(audit.Object_ID) || string.IsNullOrEmpty(audit.Additional_ID)) { Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupUser w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'."); continue; }
                         data = new KeyGroupUser { GroupIdApi = audit.Object_ID, OwnerIdApis = new List<string> { audit.Additional_ID } };
+                        skipDataFetch = true;
+                    }*/
+                    else if (objectTypeUpper == "KEYGROUPUSER")
+                    {                        
+                        if (string.IsNullOrEmpty(audit.Additional_ID) || string.IsNullOrEmpty(audit.Object_ID))
+                        {
+                            Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupUser w audycie: Additional_ID(groupIdApi)='{audit.Additional_ID}', Object_ID(ownerIdApi)='{audit.Object_ID}'.");
+                            _db.MarkAuditAsWarning(audit.ID); // Oznacz jako błąd
+                            continue;
+                        }
+                        data = new KeyGroupUser
+                        {                            
+                            GroupIdApi = audit.Additional_ID,                            
+                            OwnerIdApis = new List<string> { audit.Object_ID }
+                        };
                         skipDataFetch = true;
                     }
                     else if (objectTypeUpper == "KEYUSER")
@@ -158,6 +188,12 @@ namespace KeyLockerSync.Services
                         if (actionTypeUpper == "DELETE")
                         {
                             data = new CredentialData { Method = audit.Additional_ID, Credential = audit.Object_ID };
+                            skipDataFetch = true;
+                        }
+                        else if (actionTypeUpper == "INSERT" || actionTypeUpper == "UPDATE")
+                        {
+                            // Wywołujemy GetCredentialDataAsync bezpośrednio, nie ustawiamy skipDataFetch
+                            data = await _db.GetCredentialDataAsync(audit.Object_ID);
                             skipDataFetch = true;
                         }
                     }
