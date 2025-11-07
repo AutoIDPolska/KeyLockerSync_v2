@@ -137,7 +137,9 @@ namespace KeyLockerSync.Data
 
                 if (localDeviceId.HasValue)
                 {
-                    //Console.WriteLine($"[DEBUG] InsertKeys Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId={key.KeyId}, @deviceId={localDeviceId.Value}, @keyIdExt='{key.KeyIdExt}', @name='{key.Name}'.");
+                    Console.WriteLine($"[DEBUG] Wywołuję procedurę [keyLocker_key_get] z parametrami: @keyId={key.KeyId}, @deviceId={localDeviceId.Value}, @gid='{key.Gid}', @keyIdExt='{key.KeyIdExt}', @name='{key.Name}', @keyPlaceIdMap={key.KeyPlaceIdMap?.ToString() ?? "NULL"}.");
+
+
                     using var cmd = new SqlCommand("keyLocker_key_get", conn)
                     {
                         CommandType = CommandType.StoredProcedure
@@ -198,7 +200,7 @@ namespace KeyLockerSync.Data
                     cmd.Parameters.AddWithValue("@ts", (object)state.Ts ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@createdAt", (object)state.CreatedAt ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@updatedAt", (object)state.UpdatedAt ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@ownerIdExt", DBNull.Value);
+                    //cmd.Parameters.AddWithValue("@ownerIdExt", DBNull.Value);
                     await cmd.ExecuteNonQueryAsync();
                     Console.WriteLine("[DEBUG] InsertKeyStates Procedura wykonana pomyślnie.");
                 }
@@ -217,10 +219,8 @@ namespace KeyLockerSync.Data
 
             foreach (var place in keyPlaces)
             {
-                // Attempt to convert deviceGid (string) from API to int for the procedure
                 if (!int.TryParse(place.DeviceGid, out int deviceGidAsInt))
                 {
-                    // If conversion fails, log a warning and skip this record
                     Console.WriteLine($"[WARN] Nie można przekonwertować DeviceGid '{place.DeviceGid}' na liczbę dla PlaceId={place.PlaceId}. Pomijam rekord.");
                     continue;
                 }
@@ -232,15 +232,15 @@ namespace KeyLockerSync.Data
 
                 cmd.Parameters.AddWithValue("@placeId", place.PlaceId);
                 cmd.Parameters.AddWithValue("@deviceId", place.DeviceId);
-                cmd.Parameters.AddWithValue("@deviceGid", deviceGidAsInt); // Pass the converted int
-                cmd.Parameters.AddWithValue("@gid", (object)place.Gid ?? DBNull.Value); // API returns int, procedure expects int?
+                cmd.Parameters.AddWithValue("@deviceGid", deviceGidAsInt); 
+                cmd.Parameters.AddWithValue("@gid", (object)place.Gid ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@block", (object)place.Block ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@keyplace", (object)place.Keyplace ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@sensorState", (object)place.SensorState ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@fixedKeyFlag", (object)place.FixedKeyFlag ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@errorId", (object)place.ErrorId ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@errorMsg", (object)place.ErrorMsg ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@keyId", (object)place.KeyId ?? DBNull.Value); // keyId from API is int?
+                cmd.Parameters.AddWithValue("@keyId", (object)place.KeyId ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@keyIdExt", (object)place.KeyIdExt ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@createdAt", (object)place.CreatedAt ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@updatedAt", (object)place.UpdatedAt ?? DBNull.Value);
@@ -252,7 +252,6 @@ namespace KeyLockerSync.Data
                 catch (SqlException ex)
                 {
                     Console.WriteLine($"[ERROR] Błąd SQL podczas zapisu PlaceId={place.PlaceId}: {ex.Message}");
-                    // Log more details if needed, e.g., parameter values
                 }
             }
             Console.WriteLine($"[DB] Zakończono zapisywanie miejsc kluczy.");
@@ -384,8 +383,8 @@ namespace KeyLockerSync.Data
             {
                 // Używamy istniejącego modelu Key, ale wypełniamy tylko potrzebne pola
                 return new Key
-                {
-                    KeyId = Convert.ToInt32(reader["id"]),
+                {                    
+                    KeyIdExt = objectId,
                     Name = reader["name"].ToString()
                 };
             }
@@ -429,7 +428,6 @@ namespace KeyLockerSync.Data
             return null;
         }
 
-       
         // Pobiera dane poświadczenia (dla operacji INSERT).
         
         public async Task<object> GetCredentialDataAsync(string credential)
@@ -455,6 +453,71 @@ namespace KeyLockerSync.Data
             Console.WriteLine($"[WARN] GetCredentialData Procedura 'keyLocker_credential_postput' nie zwróciła danych dla credential='{credential}'.");
             return null;
         }
+
+        public async Task<int> GetMaxLogEventIdAsync()
+        {
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("SELECT MAX(id_log_api) FROM [UNIS].[dbo].[keylocker_log]", conn);
+
+            await conn.OpenAsync();
+            var result = await cmd.ExecuteScalarAsync();
+
+            if (result != null && result != DBNull.Value)
+            {
+                return Convert.ToInt32(result);
+            }
+
+            return 0;
+        }
+
+        public async Task InsertLogsAsync(List<KeyLockerLog> logs)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+            Console.WriteLine($"[DB] Rozpoczynam zapisywanie {logs.Count} logów...");
+
+            foreach (var log in logs)
+            {
+                
+                if (string.IsNullOrEmpty(log.DeviceGid))
+                {
+                    Console.WriteLine($"[WARN] Log EventId={log.EventId} ma pusty DeviceGid. Pomijam rekord.");
+                    continue;
+                }
+                
+                using var cmd = new SqlCommand("keyLocker_log_get", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                cmd.Parameters.AddWithValue("@eventId", log.EventId);
+                cmd.Parameters.AddWithValue("@deviceGid", log.DeviceGid);
+                cmd.Parameters.AddWithValue("@logNum", log.LogNum);
+                cmd.Parameters.AddWithValue("@type", log.Type);
+                cmd.Parameters.AddWithValue("@dateK", log.DateK);
+                cmd.Parameters.AddWithValue("@ownerIdApi", (object)log.OwnerIdApi ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@accessId", (object)log.AccessId ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@accessName", (object)log.AccessName ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@keyIdExt", (object)log.KeyIdExt ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@placeId", (object)log.PlaceId ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@block", (object)log.Block ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@keyPlace", (object)log.KeyPlace ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@firstName", (object)log.FirstName ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@lastName", (object)log.LastName ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@createdAt", log.CreatedAt);
+
+                try
+                {
+                    await cmd.ExecuteNonQueryAsync();
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"[ERROR] Błąd SQL podczas zapisu EventId={log.EventId}: {ex.Message}");
+                }
+            }
+            Console.WriteLine($"[DB] Zakończono zapisywanie logów.");
+        }
+
 
         public void MarkAuditProcessed(int id)
         {

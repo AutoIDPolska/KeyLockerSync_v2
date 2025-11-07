@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "dgSpecHash": "OMY2uGiJu+g=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\pzybura\\Documents\\GitHub\\KeyLockerSync_PZ_v2\\KeyLockerSync_v2\\KeyLockerSync.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pzybura\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.21\\microsoft.net.illink.tasks.8.0.21.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.9\\system.configuration.configurationmanager.9.0.9.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.data.sqlclient\\4.9.0\\system.data.sqlclient.4.9.0.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.diagnostics.eventlog\\9.0.9\\system.diagnostics.eventlog.9.0.9.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.io.pipelines\\9.0.9\\system.io.pipelines.9.0.9.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.net.http.json\\9.0.9\\system.net.http.json.9.0.9.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.9\\system.security.cryptography.protecteddata.9.0.9.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.text.encodings.web\\9.0.9\\system.text.encodings.web.9.0.9.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\system.text.json\\9.0.9\\system.text.json.9.0.9.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.21\\microsoft.netcore.app.runtime.win-x64.8.0.21.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.21\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.21.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.21\\microsoft.aspnetcore.app.runtime.win-x64.8.0.21.nupkg.sha512",
+    "C:\\Users\\pzybura\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.21\\microsoft.netcore.app.crossgen2.win-x64.8.0.21.nupkg.sha512"
+  ],
+  "logs": []
+}

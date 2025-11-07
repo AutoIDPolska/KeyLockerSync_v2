@@ -12,10 +12,10 @@ namespace KeyLockerSync.Models
         public int DeviceId { get; set; }
 
         [JsonPropertyName("deviceGid")]
-        public string DeviceGid { get; set; } // API returns string
+        public string DeviceGid { get; set; }
 
         [JsonPropertyName("gid")]
-        public int Gid { get; set; } // API returns int here
+        public int Gid { get; set; }
 
         [JsonPropertyName("block")]
         public int Block { get; set; }

@@ -15,7 +15,7 @@ namespace KeyLockerSync.Models
         public int DeviceId { get; set; }
 
         [JsonPropertyName("gid")]
-        public string Gid { get; set; }
+        public string? Gid { get; set; }
 
         [JsonPropertyName("keyIdExt")]
         public string KeyIdExt { get; set; }
@@ -23,8 +23,8 @@ namespace KeyLockerSync.Models
         [JsonPropertyName("state")]
         public string State { get; set; }
 
-        [JsonPropertyName("personId")]
-        public string? PersonId { get; set; }
+        //[JsonPropertyName("personId")]
+        //public int? PersonId { get; set; }
 
         [JsonPropertyName("ownerIdApi")]
         public string? OwnerIdApi { get; set; }

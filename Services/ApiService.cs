@@ -39,8 +39,6 @@ namespace KeyLockerSync.Services
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
                 Console.WriteLine("[INFO] Pomyślnie ustawiono nagłówek autoryzacji Bearer.");
             }
-
-
         }
 
         public async Task<List<Device>> GetDevicesAsync(int? gid = null, string name = null, string status = null)
@@ -88,6 +86,9 @@ namespace KeyLockerSync.Services
                 var response = await _httpClient.GetAsync("/keys");
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
+                
+                Console.WriteLine($"[DEBUG] Otrzymano odpowiedź z GET /keys: {content}");
+                
                 var keys = JsonSerializer.Deserialize<List<Key>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 if (keys != null)
@@ -137,14 +138,18 @@ namespace KeyLockerSync.Services
             if (method != HttpMethod.Put || obj is not Key key)
                 return false;
 
-            string url = $"/keys/{key.KeyId}/name";
+            string url = $"/keys/{key.KeyIdExt}/name";
 
             // Tworzymy payload z samą nazwą, zgodnie z wymaganiami API
             var payload = new { name = key.Name };
-            
+            var request = new HttpRequestMessage(HttpMethod.Put, url)
+            {
+                Content = JsonContent.Create(payload)
+            };
+
             try
             {
-                var response = await _httpClient.PutAsJsonAsync(url, payload);
+                var response = await _httpClient.SendAsync(request);
                 Console.WriteLine($"HTTP PUT {url} -> {response.StatusCode}");
 
                 if (!response.IsSuccessStatusCode)
@@ -156,7 +161,8 @@ namespace KeyLockerSync.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] Błąd wysyłki PUT dla klucza {key.KeyId}: {ex.Message}");
+               
+                Console.WriteLine($"[ERROR] Błąd wysyłki PUT dla klucza {key.KeyIdExt}: {ex.Message}");
                 return false;
             }
         }
@@ -301,12 +307,7 @@ namespace KeyLockerSync.Services
 
             if (method == HttpMethod.Post || method == HttpMethod.Put)
             {
-                if (string.IsNullOrEmpty(keyGroup.Gid))
-                {
-                    Console.WriteLine($"[WARN] Pomijam operację {method} dla grupy '{keyGroup.Name}' (GroupIdApi={keyGroup.GroupIdApi}), ponieważ GID jest wymagany, a procedura zwróciła NULL.");
-                    return false; // Zmieniono na false - operacja nie powiodła się
-                }
-
+                
                 var payload = new
                 {
                     gid = keyGroup.Gid,
@@ -649,5 +650,29 @@ namespace KeyLockerSync.Services
                 return false;
             }
         }
+
+        // Pobiera logi z API, które wystąpiły po podanym 'sinceEventId'.
+
+        public async Task<List<KeyLockerLog>> GetLogsAsync(int sinceEventId)
+        {
+            string url = $"/logs?sinceEventId={sinceEventId}";
+
+            Console.WriteLine($"[INFO] Wykonuję GET {url}");
+            try
+            {
+                var response = await _httpClient.GetAsync(url); // Wywołanie poprawionego URL
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                var logs = JsonSerializer.Deserialize<List<KeyLockerLog>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                Console.WriteLine($"[INFO] GET {url} - Pobrano {logs?.Count ?? 0} nowych logów.");
+                return logs;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd GET {url}: {ex.Message}");
+                return null;
+            }
+        }
+
     }
 }

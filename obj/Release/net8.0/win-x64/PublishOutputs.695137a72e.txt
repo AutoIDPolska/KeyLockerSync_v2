@@ -1,0 +1,4 @@
+C:\Users\pzybura\Documents\GitHub\KeyLockerSync_PZ_v2\KeyLockerSync_v2\bin\Release\net8.0\publish\win-x64\KeyLockerSync.pdb
+C:\Users\pzybura\Documents\GitHub\KeyLockerSync_PZ_v2\KeyLockerSync_v2\bin\Release\net8.0\publish\win-x64\KeyLockerSync.dll.config
+C:\Users\pzybura\Documents\GitHub\KeyLockerSync_PZ_v2\KeyLockerSync_v2\bin\Release\net8.0\publish\win-x64\sni.dll
+C:\Users\pzybura\Documents\GitHub\KeyLockerSync_PZ_v2\KeyLockerSync_v2\bin\Release\net8.0\publish\win-x64\KeyLockerSync.exe

@@ -32,6 +32,7 @@ class Program
             int keysInterval = GetIntervalFromConfig("SyncKeysIntervalSeconds", 70);
             int keyStatesInterval = GetIntervalFromConfig("SyncKeyStatesIntervalSeconds", 80);
             int keyPlacesInterval = GetIntervalFromConfig("SyncKeyPlacesIntervalSeconds", 90);
+            int logsInterval = GetIntervalFromConfig("SyncLogsIntervalSeconds", 10);
 
             var dbHelper = new DatabaseHelper(connectionString);
             var httpClient = new HttpClient();
@@ -43,14 +44,16 @@ class Program
             Console.WriteLine($"Synchronizacja kluczy co: {keysInterval} sek.");
             Console.WriteLine($"Synchronizacja stanów kluczy co: {keyStatesInterval} sek.\n");
             Console.WriteLine($"Synchronizacja miejsc kluczy co: {keyPlacesInterval} sek.\n");
+            Console.WriteLine($"Synchronizacja logów co: {logsInterval} sek.\n");
 
             Task auditSyncTask = AuditSyncLoopAsync(syncService, auditInterval);
             Task devicesSyncTask = GetDevicesLoopAsync(apiService, dbHelper, devicesInterval);
             Task keysSyncTask = GetKeysLoopAsync(apiService, dbHelper, keysInterval);
             Task keyStatesSyncTask = GetKeyStatesLoopAsync(apiService, dbHelper, keyStatesInterval);
             Task keyPlacesSyncTask = GetKeyPlacesLoopAsync(apiService, dbHelper, keyPlacesInterval);
+            Task keyLogsSyncTask = GetKeyLogsLoopAsync(apiService, dbHelper, logsInterval);
 
-            await Task.WhenAll(auditSyncTask, devicesSyncTask, keysSyncTask, keyStatesSyncTask);
+            await Task.WhenAll(auditSyncTask, devicesSyncTask, keysSyncTask, keyStatesSyncTask, keyPlacesSyncTask, keyLogsSyncTask);
         }
         catch (Exception ex)
         {
@@ -176,5 +179,36 @@ class Program
             await Task.Delay(TimeSpan.FromSeconds(intervalSeconds));
         }
     }
+
+    static async Task GetKeyLogsLoopAsync(ApiService apiService, DatabaseHelper dbHelper, int intervalSeconds)
+    {
+        while (true)
+        {
+            Console.WriteLine("\n--- Rozpoczynam cykl synchronizacji logów ---");
+            try
+            {
+                int maxEventId = await dbHelper.GetMaxLogEventIdAsync();
+                Console.WriteLine($"[INFO] Maksymalne ID logu w lokalnej bazie: {maxEventId}");
+
+                var logs = await apiService.GetLogsAsync(maxEventId);
+
+                if (logs != null && logs.Count > 0)
+                {
+                    await dbHelper.InsertLogsAsync(logs);
+                    Console.WriteLine($"[INFO] Przetworzono i zapisano {logs.Count} nowych logów.");
+                }
+                else
+                {
+                    Console.WriteLine("[INFO] Brak nowych logów do przetworzenia.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Błąd pętli synchronizacji logów: {ex.Message}");
+            }
+            await Task.Delay(TimeSpan.FromSeconds(intervalSeconds));
+        }
+    }
+
 
 }

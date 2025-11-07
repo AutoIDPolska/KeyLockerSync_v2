@@ -58,7 +58,6 @@ namespace KeyLockerSync.Services
 
                 ["KEYUSER"] = new ActionMapping
                 {
-                    //GetDataFunc = (dbh, objectId) => dbh.GetKeyUserDataAsync(objectId),
                     GetDataFunc = null, // bezpośrednio z audit
                     SendDataFunc = (apisvc, obj, method) => apisvc.AssignOrUnassignKeyAsync(obj, method)
                 },
@@ -97,7 +96,7 @@ namespace KeyLockerSync.Services
             await ProcessAuditBatch(pendingAudits);
 
             Console.WriteLine("\n--- Rozpoczynam ponowne przetwarzanie zadań z ostrzeżeniami (Status 2) ---");
-            var warningAudits = _db.GetWarningAuditRecords(); // Zakładamy, że ta metoda istnieje w DatabaseHelper
+            var warningAudits = _db.GetWarningAuditRecords();
             await ProcessAuditBatch(warningAudits);
 
             Console.WriteLine("\n--- Zakończono cykl synchronizacji audytu ---");
@@ -151,17 +150,6 @@ namespace KeyLockerSync.Services
                         };
                         skipDataFetch = true;
                     }
-                    /*{
-                        if (string.IsNullOrEmpty(audit.Object_ID) || string.IsNullOrEmpty(audit.Additional_ID)) { Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupKey w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'."); continue; }
-                        data = new KeyGroupKey { GroupIdApi = audit.Object_ID, KeyIdExts = new List<string> { audit.Additional_ID } };
-                        skipDataFetch = true;
-                    }
-                    else if (objectTypeUpper == "KEYGROUPUSER")
-                    {
-                        if (string.IsNullOrEmpty(audit.Object_ID) || string.IsNullOrEmpty(audit.Additional_ID)) { Console.WriteLine($"[ERROR] Nieprawidłowe dane dla KeyGroupUser w audycie: Object_ID='{audit.Object_ID}', Additional_ID='{audit.Additional_ID}'."); continue; }
-                        data = new KeyGroupUser { GroupIdApi = audit.Object_ID, OwnerIdApis = new List<string> { audit.Additional_ID } };
-                        skipDataFetch = true;
-                    }*/
                     else if (objectTypeUpper == "KEYGROUPUSER")
                     {                        
                         if (string.IsNullOrEmpty(audit.Additional_ID) || string.IsNullOrEmpty(audit.Object_ID))
